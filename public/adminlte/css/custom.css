@@ -1,0 +1,52 @@
+
+.btn-primary {
+  background-color: #05509aab !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 4px !important;
+}
+
+.content {
+  background-color: #edf6ff !important;
+}
+
+.content-wrapper {
+  background-color: #edf6ff !important;
+}
+
+.page-link {
+  color: #000;
+  border-color: #d3d3d3;
+}
+
+.page-item.active .page-link {
+  background-color: #6c757d; /* Bootstrap secondary */
+  border-color: #6c757d;
+  color: white;
+}
+
+label:not(.form-check-label):not(.custom-file-label) {
+  font-weight: 500 !important;
+}      
+
+.parsley-success {
+  border-color: green; /* Borde verde para campos válidos */
+}
+
+.parsley-error {
+  font-size: 0.875rem;
+  display: block;
+  margin-top: 0.25rem;
+}
+
+.parsley-errors-list {
+  list-style: none;     /* 🔧 Esto elimina los bullets */
+  padding-left: 0;      /* Opcional: elimina indentación izquierda */
+}
+
+.parsley-errors-list li {
+  color: #dc3545 !important; /* Color rojo de Bootstrap (danger) */
+  font-weight: 600;
+}
+
+ 

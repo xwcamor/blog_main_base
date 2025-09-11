@@ -1,0 +1,95 @@
+# Laravel Project - Base App
+
+This project is a base application in Laravel with functional authentication.
+It includes a custom command to create the database, run migrations, and insert an initial user automatically.
+
+---
+
+## Prerequisites
+
+- PHP 8.2 or higher
+- Composer
+- MySQL/MariaDB
+- Laravel 12.x
+- Node.js (optional, for asset compilation)
+- An environment such as Laragon or XAMPP
+
+---
+
+## Initial Setup
+
+1. Clone the repository (if applicable):
+
+```bash
+git clone <url-del-repo>
+cd project-name
+```
+
+2. Install dependencies:
+
+```bash
+composer install
+```
+
+3. Verify the file `.env`.  
+   Make sure the database connection is configured correctly:
+
+```
+APP_NAME=AppBase
+DB_DATABASE=blog_db
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+If this is a new project, change `DB_DATABASE` to the appropriate name (e.g., `app_new_db`).
+
+4. Generate the application key:
+
+```bash
+php artisan key:generate
+```
+
+5. Clear temporary cache and old configurations:
+
+```bash
+php artisan config:clear
+php artisan cache:clear
+php artisan view:clear
+php artisan route:clear
+```
+
+---
+
+## Initialize the Project
+
+Run the custom command:
+
+```bash
+php artisan setup:project
+```
+
+This command will perform the following actions:
+1. Drop the current database (if it exists).
+2. Recreate the database.
+3. Run all migrations.
+4. Insert an initial user with:
+   - Email:    `pingo@gmail.com`
+   - Password: `123456`
+
+---
+
+## Run the Server
+
+```bash
+php artisan serve
+```
+
+Open in the browser:
+http://127.0.0.1:8000
+
+---
+
+## Access the System
+
+- Email:    `pingo@gmail.com`  
+- Password: `123456`
