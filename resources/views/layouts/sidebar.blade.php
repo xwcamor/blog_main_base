@@ -3,13 +3,13 @@
     <!-- =========================
          MÓDULO DE ACCESOS
     ========================== -->
-    <li class="nav-header">Accesos del Sistema</li>
+    <li class="nav-header">{{ __('sidebar.title_access') }}</li>
 
     <li class="nav-item {{ request()->is('auth_management/users*') ? 'menu-open' : '' }}">
         <a href="#" class="nav-link {{ request()->is('auth_management/users*') ? 'active' : '' }}">
             <i class="nav-icon fas fa-user"></i>
             <p>
-                Permisos de Acceso
+                {{ __('sidebar.menu_accesses') }}
                 <i class="fas fa-angle-left right"></i>
             </p>
         </a>
@@ -18,7 +18,7 @@
                 <a href="{{ route('auth_management.users.index') }}" 
                    class="nav-link {{ request()->is('auth_management/users*') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>Usuarios</p>
+                    <p>{{ __('sidebar.users') }}</p>
                 </a>
             </li>
         </ul>
@@ -28,25 +28,33 @@
     <!-- =========================
          MÓDULO PAÍSES
     ========================== -->
-    <li class="nav-header">Ajustes del Sistema</li>
+    <li class="nav-header">{{ __('sidebar.title_setting') }}</li>
 
-    <li class="nav-item {{ request()->is('setting_management/countries*') ? 'menu-open' : '' }}">
-        <a href="#" class="nav-link {{ request()->is('setting_management/countries*') ? 'active' : '' }}">
+
+    @php
+        $localePrefix = app()->getLocale() . '/setting_management/countries';
+    @endphp
+
+    <li class="nav-item {{ request()->is($localePrefix . '*') ? 'menu-open' : '' }}">
+        <a href="#" class="nav-link {{ request()->is($localePrefix . '*') ? 'active' : '' }}">
             <i class="nav-icon fas fa-cog"></i>
             <p>
-                Ajustes
+                {{ __('sidebar.menu_settings') }}
                 <i class="fas fa-angle-left right"></i>
             </p>
         </a>
         <ul class="nav nav-treeview">
             <li class="nav-item">
-                <a href="{{ route('setting_management.countries.index') }}" 
-                   class="nav-link {{ request()->is('setting_management/countries*') ? 'active' : '' }}">
+                <a href="{{ route('setting_management.countries.index') }}"
+                class="nav-link {{ request()->is($localePrefix . '*') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>Paises</p>
+                    <p>{{ __('countries.plural') }}</p>
                 </a>
             </li>
         </ul>
     </li>
+    
+
+
 
 </ul>

@@ -36,13 +36,13 @@ class LoginController extends Controller
             // Redirect to User Dashboard
             return redirect()
                    ->route('auth_management.users.index')
-                   ->with('success', 'Sesión iniciada.');
+                   ->with('success', __('login.start_session'));
         }
 
         // Redirect back with error
         return redirect()->back()
-                         ->withInput()
-                         ->with('error', 'Error en las credenciales.');
+                   ->withInput()
+                   ->with('error', __('login.error_session'));
     }
 
     // ------------------------------
@@ -61,7 +61,7 @@ class LoginController extends Controller
         
         // Redirect to login with success message
         return redirect()
-               ->route('login')
-               ->with('success', 'Sesión cerrada.');
+                  ->route('login')
+                  ->with('success', __('login.end_session'));
     }
 }

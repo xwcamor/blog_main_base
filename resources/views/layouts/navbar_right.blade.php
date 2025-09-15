@@ -1,107 +1,126 @@
-<ul class="navbar-nav ml-auto">
-  <!-- Messages Dropdown Menu -->
+<ul class="navbar-nav ml-auto d-flex align-items-center" style="gap: 0px;">
+
+
+
+  {{-- Mensajes --}}
   <li class="nav-item dropdown">
-                <a class="nav-link" data-toggle="dropdown" href="#">
-                    <i class="far fa-comments"></i>
-                    <span class="badge badge-danger navbar-badge">3</span>
-                </a>
-                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                    <a href="#" class="dropdown-item">
-                        <!-- Message Start -->
-                        <div class="media">
-
-                            <div class="media-body">
-                                <h3 class="dropdown-item-title">
-                                    Brad Diesel
-                                    <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
-                                </h3>
-                                <p class="text-sm">Call me whenever you can...</p>
-                                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-                            </div>
-                        </div>
-                        <!-- Message End -->
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <a href="#" class="dropdown-item">
-                        <!-- Message Start -->
-                        <div class="media">
-
-                            <div class="media-body">
-                                <h3 class="dropdown-item-title">
-                                    John Pierce
-                                    <span class="float-right text-sm text-muted"><i class="fas fa-star"></i></span>
-                                </h3>
-                                <p class="text-sm">I got your message bro</p>
-                                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-                            </div>
-                        </div>
-                        <!-- Message End -->
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <a href="#" class="dropdown-item">
-                        <!-- Message Start -->
-                        <div class="media">
-
-                            <div class="media-body">
-                                <h3 class="dropdown-item-title">
-                                    Nora Silvester
-                                    <span class="float-right text-sm text-warning"><i class="fas fa-star"></i></span>
-                                </h3>
-                                <p class="text-sm">The subject goes here</p>
-                                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-                            </div>
-                        </div>
-                        <!-- Message End -->
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
-                </div>
+    <a class="nav-link" data-toggle="dropdown" href="#" title="Mensajes">
+      <i class="far fa-comments"></i>
+      <span class="badge badge-danger navbar-badge">3</span>
+    </a>
+    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+      {{-- Mensajes aquí --}}
+      <a href="#" class="dropdown-item">
+        <div class="media">
+          <div class="media-body">
+            <h3 class="dropdown-item-title">Brad Diesel <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span></h3>
+            <p class="text-sm">Call me whenever you can...</p>
+            <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+          </div>
+        </div>
+      </a>
+      <div class="dropdown-divider"></div>
+      <a href="#" class="dropdown-item">...</a>
+      <div class="dropdown-divider"></div>
+      <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
+    </div>
   </li>
 
-  <!-- Notifications Dropdown Menu -->
+  {{-- Notificaciones --}}
   <li class="nav-item dropdown">
-                <a class="nav-link" data-toggle="dropdown" href="#">
-                    <i class="far fa-bell"></i>
-                    <span class="badge badge-warning navbar-badge">15</span>
-                </a>
-                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                    <span class="dropdown-item dropdown-header">15 Notifications</span>
-                    <div class="dropdown-divider"></div>
-                    <a href="#" class="dropdown-item">
-                        <i class="fas fa-envelope mr-2"></i> 4 new messages
-                        <span class="float-right text-muted text-sm">3 mins</span>
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <a href="#" class="dropdown-item">
-                        <i class="fas fa-users mr-2"></i> 8 friend requests
-                        <span class="float-right text-muted text-sm">12 hours</span>
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <a href="#" class="dropdown-item">
-                        <i class="fas fa-file mr-2"></i> 3 new reports
-                        <span class="float-right text-muted text-sm">2 days</span>
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
-                </div>
+    <a class="nav-link" data-toggle="dropdown" href="#" title="Notificaciones">
+      <i class="far fa-bell"></i>
+      <span class="badge badge-warning navbar-badge">15</span>
+    </a>
+    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+      <span class="dropdown-item dropdown-header">15 Notifications</span>
+      <div class="dropdown-divider"></div>
+      <a href="#" class="dropdown-item">...</a>
+      <div class="dropdown-divider"></div>
+      <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+    </div>
   </li>
 
+  {{-- Herramientas (cuadro) --}}
   <li class="nav-item">
-    <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
+    <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button" title="Herramientas">
       <i class="fas fa-th-large"></i>
     </a>
   </li>
 
-  <!-- Logout Button -->
-  <li class="nav-item">
-    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: inline;" onsubmit="return confirm('¿Estás seguro que deseas cerrar sesión?')">
-      @csrf
-      <button class="nav-link btn btn-link pt-0" type="submit" title="Cerrar sesión">
-        <i class="fas fa-sign-out-alt"></i>
-      </button>
-    </form>
+  {{-- Idiomas --}}
+  <li class="nav-item dropdown">
+    <a class="nav-link" data-toggle="dropdown" href="#" title="Seleccionar idioma">
+      <i class="fas fa-language"></i>
+    </a>
+    <div class="dropdown-menu dropdown-menu-right">
+      @foreach (LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+        @php
+          $flag = match($localeCode) {
+              'es' => 'es',
+              'en' => 'us',
+              'pt' => 'br',
+              default => $localeCode
+          };
+        @endphp
+        <a rel="alternate" hreflang="{{ $localeCode }}"
+           href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}"
+           class="dropdown-item d-flex align-items-center {{ app()->getLocale() === $localeCode ? 'active font-weight-bold' : '' }}">
+          <span class="flag-icon flag-icon-{{ $flag }} mr-2"></span>
+          {{ $properties['native'] }}
+        </a>
+      @endforeach
+    </div>
   </li>
 
+  {{-- Logout --}}
+  <li class="nav-item">
 
-    
+  </li>
+ 
+ 
+{{-- Perfil de usuario con menú de configuración --}}
+<li class="nav-item dropdown user-menu">
+  {{-- Ícono redondo con inicial --}}
+  <a href="#" class="nav-link dropdown-toggle d-flex align-items-center justify-content-center rounded-circle bg-dark text-white"
+     data-toggle="dropdown" aria-expanded="false"
+     style="width: 35px; height: 35px; font-weight: bold;">
+    {{ strtoupper(auth()->user()->name[0] ?? 'U') }}
+  </a>
+
+  {{-- Dropdown --}}
+  <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+
+    {{-- Header con nombre --}}
+    <li class="dropdown-header text-center">
+      <i class="fas fa-user-circle fa-2x mb-1"></i><br>
+      {{ auth()->user()->name ?? 'Usuario' }}
+    </li>
+
+    <li class="dropdown-divider my-1"></li>
+
+    {{-- Botón Cambiar Estilo (full clickable) --}}
+    <li>
+      <a href="#" class="dropdown-item w-100 d-flex align-items-center theme-switch" id="toggle-darkmode" title="Cambiar estilo" data-theme="dark">
+        <i id="theme-icon" class="fas fa-moon mr-2"></i> Cambiar Estilo
+      </a>
+    </li>
+
+    <li class="dropdown-divider my-1"></li>
+
+    {{-- Botón Cerrar Sesión (full clickable sin borde) --}}
+    <li>
+      <form id="logout-form" action="{{ route('logout') }}" method="POST" onsubmit="return confirm('¿Estás seguro que deseas cerrar sesión?')" style="margin: 0;">
+        @csrf
+        <button type="submit" class="dropdown-item w-100 d-flex align-items-center"   title="Cerrar sesión">
+          <i class="fas fa-sign-out-alt mr-2"></i> Cerrar Sesión
+        </button>
+      </form>
+    </li>
+
+  </ul>
+</li>
+
+
+
 </ul>

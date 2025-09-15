@@ -27,7 +27,7 @@ class CountryController extends Controller
     public function index(Request $request, Country $country)
     {   
         // Base query using scope 'notDeleted' from the model
-        $query = $country::notDeleted();
+        $query = $country::query();
 
         // All Filters
         // Filter for name
@@ -36,7 +36,7 @@ class CountryController extends Controller
         }
 
         // Filter for is_active
-        if ($request->has('is_active')) {
+        if ($request->filled('is_active')) {
             $query->where('is_active', (int) $request->is_active);
         }
 
@@ -70,6 +70,7 @@ class CountryController extends Controller
         // Insert data on table
         $country = new Country();
         $country->name = $request->name;
+        $country->created_by = auth()->id(); // User in session
         
         // Save array data
         $country->save();
@@ -77,7 +78,7 @@ class CountryController extends Controller
         // Redirect to view with success message
         return redirect()
                ->route('setting_management.countries.index')
-               ->with('success','Registro creado.');
+               ->with('success', __('global.created_success'));
     }
 
     // ------------------------------
@@ -111,7 +112,7 @@ class CountryController extends Controller
         // Redirect to view with success message
         return redirect()
                ->route('setting_management.countries.index')
-               ->with('success', 'Registro actualizado');
+               ->with('success', __('global.updated_success'));
     }
 
     // ------------------------------
@@ -126,15 +127,18 @@ class CountryController extends Controller
     // Action Update column is_deleted (hide from view)
     public function deleteSave(DeleteRequest $request, Country $country)
     {
-        $country->update([
-            'is_active' => false,
-            'is_deleted' => true,
-            'deleted_description' => $request->deleted_description,
-        ]);
+        // Store reason and who deleted
+        $country->deletion_reason = $request->deleted_description;
+        $country->deleted_by = auth()->id();
+        $country->is_active = false; // Optional: disable when deleting
+        $country->save();
+
+        // Soft delete (sets deleted_at)
+        $country->delete();
 
         return redirect()
             ->route('setting_management.countries.index')
-            ->with('success', 'Registro eliminado');
+            ->with('success', __('global.deleted_success'));
     }
 
 }

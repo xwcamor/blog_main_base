@@ -18,7 +18,7 @@ It includes a custom command to create the database, run migrations, and insert 
 
 ## Initial Setup
 
-1. Clone the repository (if applicable):
+1. Clone the repository:
 
 ```bash
 git clone <url-del-repo>
@@ -52,10 +52,8 @@ php artisan key:generate
 5. Clear temporary cache and old configurations:
 
 ```bash
-php artisan config:clear
-php artisan cache:clear
-php artisan view:clear
-php artisan route:clear
+php artisan optimize:clear
+# php artisan permission:cache-reset  #Cache for permissions
 ```
 
 ---
@@ -77,6 +75,8 @@ This command will perform the following actions:
    - Password: `123456`
 
 ---
+# Migracion de roles
+php artisan db:seed --class=RolesAndPermissionsSeeder
 
 ## Run the Server
 

@@ -15,10 +15,30 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('slug', 22)->unique();
+
+            // Functional status (enabled/disabled)
             $table->boolean('is_active')->default(true);
-            $table->boolean('is_deleted')->default(false);
-            $table->text('deleted_description')->nullable();             
+
+            // Audit fields
+            $table->unsignedBigInteger('created_by')->nullable();
+            $table->unsignedBigInteger('deleted_by')->nullable();
+
+            // Optional deletion reason
+            $table->text('deletion_reason')->nullable();
+
+            // Created at & Updated at
             $table->timestamps();
+
+            // Soft delete (deleted_at)
+            $table->softDeletes();
+
+            // Optional foreign keys to users table
+            $table->foreign('created_by')
+                        ->references('id')->on('users')
+                        ->nullOnDelete();
+            $table->foreign('deleted_by')
+                        ->references('id')->on('users')
+                        ->nullOnDelete();
         });
     }
 

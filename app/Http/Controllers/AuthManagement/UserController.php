@@ -27,6 +27,7 @@ class UserController extends Controller
     // ------------------------------
     public function index(Request $request, User $user)
     {
+        // Base query using scope 'notDeleted' from the model
         $query = $user::notDeleted();
 
         // Filters

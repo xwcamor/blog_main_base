@@ -1,22 +1,30 @@
+<!DOCTYPE html>
 <html lang="en" style="height: auto;">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>APP - @yield('title')</title>
+    <title>{{ __('global.app_name') }} - @yield('title')</title>
+
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&amp;display=fallback">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/fontawesome-free/css/all.min.css') }}">
+    <!-- icheck bootstrap -->
+    <link rel="stylesheet" href="{{ asset('adminlte/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">    
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('adminlte/css/adminlte.min.css') }}">  
+    <!-- Custom Theme style -->
     <link rel="stylesheet" href="{{ asset('adminlte/css/custom.css') }}">  
-  
+    <link rel="stylesheet" href="{{ asset('adminlte/css/custom_dark-mode.css') }}">  
+    <!-- Custom Scripts -->
+    <script src="{{ asset('adminlte/js/custom.js') }}"></script>  
+    <script src="{{ asset('adminlte/js/custom_dark-mode.js') }}"></script>    
   </head>
-  <body class="sidebar-mini layout-fixed layout-navbar-fixed" >
+  <body class="sidebar-mini layout-fixed layout-navbar-fixed text-md" >
     <!-- wrapper -->
     <div class="wrapper">
       <!-- Navbar -->
-      <nav class="main-header navbar navbar-expand navbar-white navbar-light" style="background-color:#bad7f8 !important">
+      <nav class="main-header navbar navbar-expand navbar-white navbar-light text-md" >
         <!-- Left navbar links -->
         @include('layouts.navbar_left')  <!-- Esto carga el archivo navbar_left.blade.php -->  
         <!-- Right navbar links -->
@@ -27,9 +35,9 @@
       <!-- Main Sidebar Container -->
       <aside class="main-sidebar sidebar-dark-maroon elevation-x" style="background-color:#2c3e50 !important">
         <!-- Brand Logo -->
-        <a href="../../index3.html" class="brand-link">
+        <a   class="brand-link">
           <img src="{{ asset('adminlte/img/AdminLTELogo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-          <span class="brand-text font-weight-light">AdminLTE 3</span>
+          <span class="brand-text font-weight-light">{{ __('global.app_name') }}</span>
         </a>
 
         <!-- Sidebar -->
@@ -39,10 +47,10 @@
             <div class="image">
               @auth
                 <img src="{{ asset(auth()->user()->photo ?? 'adminlte/img/user2-160x160.jpg') }}"
-                    class="img-circle elevation-2" alt="Foto del usuario" width="100">
+                    class="img-circle elevation-2" alt="User" width="100">
               @else
                 <img src="{{ asset('adminlte/img/user2-160x160.jpg') }}"
-                    class="img-circle elevation-2" alt="Invitado" width="100">
+                    class="img-circle elevation-2" alt="Guest" width="100">
               @endauth
             </div>
             <div class="info">
@@ -66,9 +74,19 @@
         <section class="content-header">
           <div class="container-fluid">
             <div class="row mb-2">
-              <div class="col-sm-12">
-                <h1> </h1>
-              </div>              
+              <div class="col-sm-6">
+                <h1>@yield('title')</h1>
+              </div>
+              <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                  <li class="breadcrumb-item">
+                    <a href="{{ LaravelLocalization::getLocalizedURL(null, '/') }}">
+                      {{ __('global.home') }}
+                    </a>                    
+                  </li>
+                  <li class="breadcrumb-item active">@yield('title_navbar')</li>
+                </ol>
+              </div>
             </div>
           </div><!-- /.container-fluid -->
         </section>
@@ -77,6 +95,8 @@
         <section class="content">
           <div class="container-fluid">
             @yield('content')
+
+
           </div><!-- /.container-fluid -->
         </section>
         <!-- /.content -->
@@ -84,7 +104,7 @@
       <!-- /.content-wrapper -->
       
       <!-- Main Footer -->
-      <footer class="main-footer mt-2">
+      <footer class="main-footer text-md">
         @include('layouts.footer')  <!-- Esto carga el archivo footer.blade.php -->  
       </footer>
       <!-- /.Main Footer -->
@@ -92,8 +112,10 @@
       <!-- Control Sidebar -->
       <aside class="control-sidebar control-sidebar-dark" style="display: none;">
         <!-- Control sidebar content goes here -->
-      <div class="p-3 control-sidebar-content" style="">
-        <h5>Customize AdminLTE</h5><hr class="mb-2"><div class="mb-4"><input type="checkbox" value="1" class="mr-1"><span>Dark Mode</span></div><h6>Header Options</h6><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Fixed</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Dropdown Legacy Offset</span></div><div class="mb-4"><input type="checkbox" value="1" class="mr-1"><span>No border</span></div><h6>Sidebar Options</h6><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Collapsed</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Fixed</span></div><div class="mb-1"><input type="checkbox" value="1" checked="checked" class="mr-1"><span>Sidebar Mini</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Sidebar Mini MD</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Sidebar Mini XS</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Nav Flat Style</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Nav Legacy Style</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Nav Compact</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Nav Child Indent</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Nav Child Hide on Collapse</span></div><div class="mb-4"><input type="checkbox" value="1" class="mr-1"><span>Disable Hover/Focus Auto-Expand</span></div><h6>Footer Options</h6><div class="mb-4"><input type="checkbox" value="1" class="mr-1"><span>Fixed</span></div><h6>Small Text Options</h6><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Body</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Navbar</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Brand</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Sidebar Nav</span></div><div class="mb-4"><input type="checkbox" value="1" class="mr-1"><span>Footer</span></div><h6>Navbar Variants</h6><div class="d-flex"><select class="custom-select mb-3 text-light border-0 bg-white"><option class="bg-primary">Primary</option><option class="bg-secondary">Secondary</option><option class="bg-info">Info</option><option class="bg-success">Success</option><option class="bg-danger">Danger</option><option class="bg-indigo">Indigo</option><option class="bg-purple">Purple</option><option class="bg-pink">Pink</option><option class="bg-navy">Navy</option><option class="bg-lightblue">Lightblue</option><option class="bg-teal">Teal</option><option class="bg-cyan">Cyan</option><option class="bg-dark">Dark</option><option class="bg-gray-dark">Gray dark</option><option class="bg-gray">Gray</option><option class="bg-light">Light</option><option class="bg-warning">Warning</option><option class="bg-white">White</option><option class="bg-orange">Orange</option></select></div><h6>Accent Color Variants</h6><div class="d-flex"></div><select class="custom-select mb-3 border-0"><option>None Selected</option><option class="bg-primary">Primary</option><option class="bg-warning">Warning</option><option class="bg-info">Info</option><option class="bg-danger">Danger</option><option class="bg-success">Success</option><option class="bg-indigo">Indigo</option><option class="bg-lightblue">Lightblue</option><option class="bg-navy">Navy</option><option class="bg-purple">Purple</option><option class="bg-fuchsia">Fuchsia</option><option class="bg-pink">Pink</option><option class="bg-maroon">Maroon</option><option class="bg-orange">Orange</option><option class="bg-lime">Lime</option><option class="bg-teal">Teal</option><option class="bg-olive">Olive</option></select><h6>Dark Sidebar Variants</h6><div class="d-flex"></div><select class="custom-select mb-3 text-light border-0 bg-primary"><option>None Selected</option><option class="bg-primary">Primary</option><option class="bg-warning">Warning</option><option class="bg-info">Info</option><option class="bg-danger">Danger</option><option class="bg-success">Success</option><option class="bg-indigo">Indigo</option><option class="bg-lightblue">Lightblue</option><option class="bg-navy">Navy</option><option class="bg-purple">Purple</option><option class="bg-fuchsia">Fuchsia</option><option class="bg-pink">Pink</option><option class="bg-maroon">Maroon</option><option class="bg-orange">Orange</option><option class="bg-lime">Lime</option><option class="bg-teal">Teal</option><option class="bg-olive">Olive</option></select><h6>Light Sidebar Variants</h6><div class="d-flex"></div><select class="custom-select mb-3 border-0"><option>None Selected</option><option class="bg-primary">Primary</option><option class="bg-warning">Warning</option><option class="bg-info">Info</option><option class="bg-danger">Danger</option><option class="bg-success">Success</option><option class="bg-indigo">Indigo</option><option class="bg-lightblue">Lightblue</option><option class="bg-navy">Navy</option><option class="bg-purple">Purple</option><option class="bg-fuchsia">Fuchsia</option><option class="bg-pink">Pink</option><option class="bg-maroon">Maroon</option><option class="bg-orange">Orange</option><option class="bg-lime">Lime</option><option class="bg-teal">Teal</option><option class="bg-olive">Olive</option></select><h6>Brand Logo Variants</h6><div class="d-flex"></div><select class="custom-select mb-3 border-0"><option>None Selected</option><option class="bg-primary">Primary</option><option class="bg-secondary">Secondary</option><option class="bg-info">Info</option><option class="bg-success">Success</option><option class="bg-danger">Danger</option><option class="bg-indigo">Indigo</option><option class="bg-purple">Purple</option><option class="bg-pink">Pink</option><option class="bg-navy">Navy</option><option class="bg-lightblue">Lightblue</option><option class="bg-teal">Teal</option><option class="bg-cyan">Cyan</option><option class="bg-dark">Dark</option><option class="bg-gray-dark">Gray dark</option><option class="bg-gray">Gray</option><option class="bg-light">Light</option><option class="bg-warning">Warning</option><option class="bg-white">White</option><option class="bg-orange">Orange</option><a href="#">clear</a></select></div></aside>
+        <div class="p-3 control-sidebar-content" style="">
+          aaa
+        </div>
+      </aside>
       <!-- /.control-sidebar -->
 
     <div id="sidebar-overlay"></div></div>
@@ -113,7 +135,6 @@
 
     <!-- Parsley -->
     @include('layouts.plugins.parsley')
-
-
+ 
   </body>
 </html>
