@@ -18,5 +18,4 @@ return [
     'is_active'       => 'Estado',
     'created_at'     => 'Creado en',
     'updated_at'     => 'Actualizado en',
-    
 ];
