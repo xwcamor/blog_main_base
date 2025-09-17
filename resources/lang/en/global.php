@@ -48,4 +48,9 @@ return [
     'deleted_by'           => 'Deleted by',
     'deleted_at'           => 'Deleted at',
     'deleted_reason'       => 'Reason for deletion',
+
+    'id'                   => 'ID',
+    'name'                 => 'Name',
+    'status'               => 'Status',
+    'editable'             => 'Editable',
 ];

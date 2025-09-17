@@ -57,10 +57,10 @@
               <i class="fas fa-file-export"></i> <span class="d-none d-sm-inline">{{ __('global.export') }}</span>
             </button>
             <div class="dropdown-menu dropdown-menu-right">
-              <a class="dropdown-item text-dark" href="{{ route('setting_management.countries.export_excel') }}">
+              <a class="dropdown-item text-dark" href="{{ route('setting_management.countries.export_excel', request()->query()) }}">
                 <i class="fas fa-file-excel text-success"></i> {{ __('global.excel') }}
               </a>
-              <a class="dropdown-item text-dark" href="{{ route('setting_management.countries.export_pdf') }}">
+              <a class="dropdown-item text-dark" href="{{ route('setting_management.countries.export_pdf', request()->query()) }}">
                 <i class="fas fa-file-pdf text-danger"></i> {{ __('global.pdf') }}
               </a>
             </div>

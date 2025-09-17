@@ -41,14 +41,14 @@ Route::group(
 
             // Setting Management
             Route::prefix('setting_management')->name('setting_management.')->group(function () {
-                // Countries
-                Route::resource('countries', CountryController::class)->names('countries');
-                Route::get('countries/{country}/delete',        [CountryController::class, 'delete'])    ->name('countries.delete');
-                Route::delete('countries/{country}/deleteSave', [CountryController::class, 'deleteSave'])->name('countries.deleteSave');
+                // Countries - Custom routes must be defined before the resource route
                 Route::get('countries/live_edit', [CountryController::class, 'liveEdit'])->name('countries.live_edit');
-                Route::post('countries/update_inline', [CountryController::class, 'updateInline'])->name('countries.update_inline');                
+                Route::post('countries/update_inline', [CountryController::class, 'updateInline'])->name('countries.update_inline');
                 Route::get('countries/export_excel', [CountryController::class, 'exportExcel'])->name('countries.export_excel');
                 Route::get('countries/export_pdf', [CountryController::class, 'exportPdf'])->name('countries.export_pdf');
+                Route::get('countries/{country}/delete', [CountryController::class, 'delete'])->name('countries.delete');
+                Route::delete('countries/{country}/deleteSave', [CountryController::class, 'deleteSave'])->name('countries.deleteSave');
+                Route::resource('countries', CountryController::class)->names('countries');
             });
 
             // Auth Management
