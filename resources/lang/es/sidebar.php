@@ -12,4 +12,5 @@ return [
     'title_setting' => 'Ajustes del Sistema',
     'menu_settings' => 'Ajustes',
     'countries' => 'Listado de Países',
+    'workers' => 'Listado de Trabajadores',
 ];

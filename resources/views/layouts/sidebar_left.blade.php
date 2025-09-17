@@ -27,17 +27,16 @@
  
 
     <!-- =========================
-         SETTINGS
-    ========================== -->
+     SETTINGS
+    ========================= -->
     <li class="nav-header">{{ __('sidebar.title_setting') }}</li>
 
-
     @php
-        $localePrefix = app()->getLocale() . '/setting_management/countries';
+        $localePrefix = app()->getLocale() . '/setting_management';
     @endphp
 
-    <li class="nav-item {{ request()->is($localePrefix . '*') ? 'menu-open' : '' }}">
-        <a href="#" class="nav-link {{ request()->is($localePrefix . '*') ? 'active' : '' }}">
+    <li class="nav-item {{ request()->is($localePrefix . '/*') ? 'menu-open' : '' }}">
+        <a href="#" class="nav-link {{ request()->is($localePrefix . '/*') ? 'active' : '' }}">
             <i class="nav-icon fas fa-cog"></i>
             <p>
                 {{ __('sidebar.menu_settings') }}
@@ -45,17 +44,23 @@
             </p>
         </a>
         <ul class="nav nav-treeview">
+            <!-- Countries -->
             <li class="nav-item">
                 <a href="{{ route('setting_management.countries.index') }}"
-                class="nav-link {{ request()->is($localePrefix . '*') ? 'active' : '' }}">
+                class="nav-link {{ request()->is($localePrefix . '/countries*') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon"></i>
                     <p>{{ __('countries.plural') }}</p>
                 </a>
             </li>
+
+            <!-- Workers -->
+            <li class="nav-item">
+                <a href="{{ route('setting_management.workers.index') }}"
+                class="nav-link {{ request()->is($localePrefix . '/workers*') ? 'active' : '' }}">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>{{ __('workers.plural') }}</p>
+                </a>
+            </li>
         </ul>
     </li>
-    
-
-
-
 </ul>

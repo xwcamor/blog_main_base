@@ -14,6 +14,7 @@ use App\Http\Controllers\AuthManagement\Auth\ForgotPasswordController;
 use App\Http\Controllers\AuthManagement\Auth\ResetPasswordController;
 use App\Http\Controllers\AuthManagement\UserController;
 use App\Http\Controllers\SettingManagement\CountryController;
+use App\Http\Controllers\SettingManagement\WorkerController;
 //use App\Http\Controllers\LocaleController;
 
 // Localization
@@ -49,8 +50,19 @@ Route::group(
                 Route::post('countries/update_inline', [CountryController::class, 'updateInline'])->name('countries.update_inline');                
                 Route::get('countries/export_excel', [CountryController::class, 'exportExcel'])->name('countries.export_excel');
                 Route::get('countries/export_pdf', [CountryController::class, 'exportPdf'])->name('countries.export_pdf');
+            
             });
 
+            // Workers
+            Route::prefix('setting_management')->name('setting_management.')->group(function () {
+            Route::get('/workers/fetch-dni/{num_doc}', [WorkerController::class, 'fetchDni'])->name('workers.fetchDni');
+            Route::get('workers/fetch_dni', [WorkerController::class, 'fetchDni'])->name('workers.fetch_dni');
+            Route::resource('workers', WorkerController::class)->names('workers');
+            Route::get('workers/{worker}/delete',        [WorkerController::class, 'delete'])    ->name('workers.delete');
+            Route::delete('workers/{worker}/deleteSave', [WorkerController::class, 'deleteSave'])->name('workers.deleteSave');
+            });
+
+            
             // Auth Management
             Route::prefix('auth_management')->name('auth_management.')->group(function () {
                 // Users
