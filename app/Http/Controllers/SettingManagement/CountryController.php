@@ -11,6 +11,7 @@ use App\Models\Country;
 
 // Use Illuminates
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 // Use Request folder for validations
 use App\Http\Requests\SettingManagement\Country\StoreRequest;
@@ -84,9 +85,10 @@ class CountryController extends Controller
     // ------------------------------
     // SHOW
     // ------------------------------
-    public function show(Country $country)
-    {   
-        // Displays file show.blade.php
+    public function show($slug)
+    {
+        $country = Country::withTrashed()->where('slug', $slug)->firstOrFail();
+
         return view('setting_management.countries.show', compact('country'));
     }
 
@@ -128,9 +130,9 @@ class CountryController extends Controller
     public function deleteSave(DeleteRequest $request, Country $country)
     {
         // Store reason and who deleted
-        $country->deletion_reason = $request->deleted_description;
+        $country->deleted_description = $request->deleted_description;
         $country->deleted_by = auth()->id();
-        $country->is_active = false; // Optional: disable when deleting
+        $country->is_active = false; 
         $country->save();
 
         // Soft delete (sets deleted_at)
@@ -139,6 +141,48 @@ class CountryController extends Controller
         return redirect()
             ->route('setting_management.countries.index')
             ->with('success', __('global.deleted_success'));
+    }
+
+
+    // Live Edit View
+    public function liveEdit(Request $request, Country $country)
+    {
+        // Base query using scope 'notDeleted' from the model
+        $query = $country::query();
+
+        // All Filters
+        // Filter for name
+        if ($request->filled('name')) {
+            $query->where('name', 'like', '%' . $request->name . '%');
+        }
+
+        // Filter for is_active
+        if ($request->filled('is_active')) {
+            $query->where('is_active', (int) $request->is_active);
+        }
+
+        // Order
+        $sort = $request->get('sort', 'id');
+        $direction = $request->get('direction', 'asc');
+
+        if (in_array($sort, ['id', 'name', 'is_active']) && in_array($direction, ['asc', 'desc'])) {
+            $query->orderBy($sort, $direction);
+        }
+
+        // Pagination for 10 rows
+        $countries = $query->paginate(10)->appends($request->all());
+
+        return view('setting_management.countries.live_edit', compact('countries'));
+    }
+    
+    // Action Update inline
+    public function updateInline(Request $request)
+    {
+        $country = Country::findOrFail($request->id);
+        $country->{$request->field} = $request->value;
+        $country->save();
+
+        return response()->json(['success' => true]);
     }
 
 }

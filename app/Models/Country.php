@@ -18,7 +18,7 @@ class Country extends Model
         'name',
         'slug',
         'is_active',
-        'deletion_reason',
+        'deletion_description',
         'created_by',
         'deleted_by',      
     ];
@@ -59,8 +59,8 @@ class Country extends Model
     public function getStateHtmlAttribute()
     {
         return $this->is_active
-            ? '<span class="text-success">' . __('global.active') . '</span>'
-            : '<span class="text-danger">' . __('global.inactive') . '</span>';
+            ? '<span class="badge badge-success">' . __('global.active') . '</span>'
+            : '<span class="badge badge-danger">' . __('global.inactive') . '</span>';
     }
 
     /**
@@ -72,4 +72,12 @@ class Country extends Model
             ? __('global.active')
             : __('global.inactive');
     }
+
+    /**
+     * Scope to filter out deleted records.
+     */
+    public function scopeNotDeleted($query)
+    {
+        return $query->whereNull('deleted_at');
+    }       
 }

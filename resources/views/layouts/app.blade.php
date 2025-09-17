@@ -6,61 +6,60 @@
     <title>{{ __('global.app_name') }} - @yield('title')</title>
 
     <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&amp;display=fallback">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/fontawesome-free/css/all.min.css') }}">
     <!-- icheck bootstrap -->
-    <link rel="stylesheet" href="{{ asset('adminlte/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">    
+    <link rel="stylesheet" href="{{ asset('adminlte/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
     <!-- Theme style -->
-    <link rel="stylesheet" href="{{ asset('adminlte/css/adminlte.min.css') }}">  
+    <link rel="stylesheet" href="{{ asset('adminlte/css/adminlte.min.css') }}">
     <!-- Custom Theme style -->
-    <link rel="stylesheet" href="{{ asset('adminlte/css/custom.css') }}">  
-    <link rel="stylesheet" href="{{ asset('adminlte/css/custom_dark-mode.css') }}">  
-    <!-- Custom Scripts -->
-    <script src="{{ asset('adminlte/js/custom.js') }}"></script>  
-    <script src="{{ asset('adminlte/js/custom_dark-mode.js') }}"></script>    
+    <link rel="stylesheet" href="{{ asset('adminlte/css/custom.css') }}">
+    <link rel="stylesheet" href="{{ asset('adminlte/css/custom_dark-mode.css') }}">
   </head>
-  <body class="sidebar-mini layout-fixed layout-navbar-fixed text-md" >
+
+  <body class="sidebar-mini layout-fixed layout-navbar-fixed text-md">
     <!-- wrapper -->
     <div class="wrapper">
-      <!-- Navbar -->
-      <nav class="main-header navbar navbar-expand navbar-white navbar-light text-md" >
+      <!-- navbar -->
+      <nav class="main-header navbar navbar-expand navbar-white navbar-light text-md">
         <!-- Left navbar links -->
-        @include('layouts.navbar_left')  <!-- Esto carga el archivo navbar_left.blade.php -->  
+        @include('layouts.navbar_left')
         <!-- Right navbar links -->
-        @include('layouts.navbar_right')  <!-- Esto carga el archivo navbar_right.blade.php -->  
+        @include('layouts.navbar_right')
       </nav>
       <!-- /.navbar -->
 
       <!-- Main Sidebar Container -->
-      <aside class="main-sidebar sidebar-dark-maroon elevation-x" style="background-color:#2c3e50 !important">
+      <aside class="main-sidebar sidebar-dark-maroon elevation-4" style="background-color:#2c3e50 !important">
         <!-- Brand Logo -->
-        <a   class="brand-link">
-          <img src="{{ asset('adminlte/img/AdminLTELogo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+        <a href="{{ url('/') }}" class="brand-link">
+          <img src="{{ asset('adminlte/img/AdminLTELogo.png') }}" alt="Logo"
+               class="brand-image img-circle elevation-3" style="opacity:.8">
           <span class="brand-text font-weight-light">{{ __('global.app_name') }}</span>
         </a>
 
-        <!-- Sidebar -->
+        <!-- sidebar -->
         <div class="sidebar">
           <!-- Sidebar user (optional) -->
           <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
               @auth
-                <img src="{{ asset(auth()->user()->photo ?? 'adminlte/img/user2-160x160.jpg') }}"
-                    class="img-circle elevation-2" alt="User" width="100">
+                <img src="{{ asset('storage/photos/' .auth()->user()->photo ?? 'adminlte/img/user2-160x160.jpg') }}"
+                     class="img-circle elevation-2" alt="User" width="100">
               @else
                 <img src="{{ asset('adminlte/img/user2-160x160.jpg') }}"
-                    class="img-circle elevation-2" alt="Guest" width="100">
+                     class="img-circle elevation-2" alt="Guest" width="100">
               @endauth
             </div>
             <div class="info">
-              <a  class="d-block">{{ auth()->user()->name}}</a>
+              <a class="d-block">{{ auth()->user()->name }}</a>
             </div>
           </div>
 
           <!-- Sidebar Menu -->
           <nav class="mt-2">
-            @include('layouts.sidebar')  <!-- Esto carga el archivo sidebar_menu.blade.php -->  
+            @include('layouts.sidebar_left')
           </nav>
           <!-- /.sidebar-menu -->
         </div>
@@ -82,59 +81,57 @@
                   <li class="breadcrumb-item">
                     <a href="{{ LaravelLocalization::getLocalizedURL(null, '/') }}">
                       {{ __('global.home') }}
-                    </a>                    
+                    </a>
                   </li>
                   <li class="breadcrumb-item active">@yield('title_navbar')</li>
                 </ol>
               </div>
             </div>
-          </div><!-- /.container-fluid -->
+          </div>
         </section>
 
         <!-- Main content -->
         <section class="content">
           <div class="container-fluid">
             @yield('content')
-
-
-          </div><!-- /.container-fluid -->
+          </div>
         </section>
         <!-- /.content -->
       </div>
-      <!-- /.content-wrapper -->
-      
+      <!-- /.wrapper -->
+
       <!-- Main Footer -->
       <footer class="main-footer text-md">
-        @include('layouts.footer')  <!-- Esto carga el archivo footer.blade.php -->  
+        @include('layouts.footer')
       </footer>
       <!-- /.Main Footer -->
 
-      <!-- Control Sidebar -->
-      <aside class="control-sidebar control-sidebar-dark" style="display: none;">
-        <!-- Control sidebar content goes here -->
-        <div class="p-3 control-sidebar-content" style="">
-          aaa
+      <!-- Control Right Sidebar -->
+      <aside class="control-sidebar control-sidebar-dark" style="display:none;">
+        <div class="p-3 control-sidebar-content">
+          @include('layouts.sidebar_right')
         </div>
       </aside>
-      <!-- /.control-sidebar -->
+      <!-- /.Control Right Sidebar -->
 
-    <div id="sidebar-overlay"></div></div>
+    </div>
     <!-- ./wrapper -->
 
     <!-- jQuery -->
     <script src="{{ asset('adminlte/plugins/jquery/jquery.min.js') }}"></script>
-
     <!-- Bootstrap 4 -->
     <script src="{{ asset('adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
- 
     <!-- AdminLTE App -->
     <script src="{{ asset('adminlte/js/adminlte.min.js') }}"></script>
-    
+    <!-- Custom Scripts -->
+    <script src="{{ asset('adminlte/js/custom.js') }}"></script>
+    <script src="{{ asset('adminlte/js/custom_dark-mode.js') }}"></script>
     <!-- Sweetalert2 -->
     @include('layouts.plugins.sweetalert2')
-
     <!-- Parsley -->
     @include('layouts.plugins.parsley')
- 
+    <!-- Page Scripts -->
+    @yield('scripts')
+
   </body>
 </html>

@@ -44,24 +44,24 @@
           <div class="col-6">
             <div class="icheck-primary">
               <input type="checkbox" id="remember">
-              <label for="remember"> {{ __('login.rememberme') }} </label>
+              <label for="remember"> {{ __('auth.rememberme') }} </label>
             </div>
           </div>
           <div class="col-6">
-            <button type="submit" class="btn btn-primary btn-block btn_submit"><i class="fas fa-sign-in-alt"></i>  {{ __('login.login') }}</button>
+            <button type="submit" class="btn btn-primary btn-block btn_submit"><i class="fas fa-sign-in-alt"></i>  {{ __('auth.login') }}</button>
           </div>
         </div>
       </form>
 
       <div class="social-auth-links text-center mt-3 mb-2">
-        <a href="#" class="btn btn-block btn-secondary">
-          <i class="fab fa-google mr-2"></i> {{ __('login.login_google') }}
+        <a href="{{ route('auth_management.google.redirect') }}" class="btn btn-block btn-secondary">
+          <i class="fab fa-google mr-2"></i> {{ __('auth.login_google') }}
         </a>
       </div>
 
       <p class="mb-1 text-center pt-2">
-        <a href="forgot-password.html">{{ __('login.forgot_password') }}</a>
-      </p>
+        <a href="{{ route('password.request') }}">{{ __('login.forgot_password') }}</a>
+      </p>      
 
       <p class="text-center text-sm mt-3">
         {!! __('global.disclosure', [
@@ -79,7 +79,7 @@
           data-default="{{ asset('adminlte/img/login_avatar.gif') }}"
           data-email="{{ asset('adminlte/img/login_avatar_email.png') }}"
           data-pass="{{ asset('adminlte/img/login_avatar_password.png') }}"
-          alt="Imagen de login"
+          alt="Login Image"
           class="img-fluid h-100 w-100"
           style="object-fit: cover; border-top-right-radius: .25rem; border-bottom-right-radius: .25rem;">
     </div>
@@ -87,15 +87,15 @@
   </div>
   <div class="card-footer small text-muted py-1">
     <p class="mb-0 text-start" style="font-size: 0.65rem;">
-      {{ __('login.disclaimer_affiliation', ['app' => config('app.name')]) }}
+      {{ __('auth.disclaimer_affiliation', ['app' => config('app.name')]) }}
     </p>
 
     <p class="mb-0 text-start" style="font-size: 0.65rem;">
-      {{ __('login.client_content_responsibility') }}
+      {{ __('auth.client_content_responsibility') }}
     </p>
 
     <p class="mb-0 text-center">
-      © {{ now()->year }} {{ config('app.name') }} – {{ __('login.all_rights_reserved') }}
+      © {{ now()->year }} {{ config('app.name') }} – {{ __('auth.all_rights_reserved') }}
     </p>    
   </div>
 </div>

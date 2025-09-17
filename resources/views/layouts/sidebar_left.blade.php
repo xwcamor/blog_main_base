@@ -1,7 +1,7 @@
 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
     <!-- =========================
-         MÓDULO DE ACCESOS
+         ACCESSES
     ========================== -->
     <li class="nav-header">{{ __('sidebar.title_access') }}</li>
 
@@ -24,9 +24,10 @@
         </ul>
     </li>
 
+ 
 
     <!-- =========================
-         MÓDULO PAÍSES
+         SETTINGS
     ========================== -->
     <li class="nav-header">{{ __('sidebar.title_setting') }}</li>
 

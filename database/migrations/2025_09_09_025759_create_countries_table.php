@@ -23,8 +23,8 @@ return new class extends Migration
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('deleted_by')->nullable();
 
-            // Optional deletion reason
-            $table->text('deletion_reason')->nullable();
+            // Deletion reason
+            $table->text('deleted_description')->nullable();
 
             // Created at & Updated at
             $table->timestamps();

@@ -13,17 +13,38 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->string('photo')->nullable();
-            $table->rememberToken();
+            $table->string('google_id')->nullable()->unique();            
+            $table->string('password')->nullable();
+            $table->string('name');            
+            $table->string('photo')->nullable();            
             $table->string('slug', 22)->unique();
+            $table->rememberToken();
+            $table->timestamp('email_verified_at')->nullable();
+
+            // Functional status (enabled/disabled)
             $table->boolean('is_active')->default(true);
-            $table->boolean('is_deleted')->default(false);
-            $table->text('deleted_description')->nullable();                
+
+            // Audit fields
+            $table->unsignedBigInteger('created_by')->nullable();
+            $table->unsignedBigInteger('deleted_by')->nullable();
+
+            // Deletion reason
+            $table->text('deleted_description')->nullable();
+
+            // Created at & Updated at
             $table->timestamps();
+
+            // Soft delete (deleted_at)
+            $table->softDeletes();
+
+            // Optional foreign keys to users table
+            $table->foreign('created_by')
+                        ->references('id')->on('users')
+                        ->nullOnDelete();
+            $table->foreign('deleted_by')
+                        ->references('id')->on('users')
+                        ->nullOnDelete();
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

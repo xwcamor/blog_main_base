@@ -9,10 +9,10 @@ It includes a custom command to create the database, run migrations, and insert 
 
 - PHP 8.2 or higher
 - Composer
-- MySQL/MariaDB
+- MySQL 
 - Laravel 12.x
 - Node.js (optional, for asset compilation)
-- An environment such as Laragon or XAMPP
+- An environment such as Laragon  
 
 ---
 

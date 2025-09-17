@@ -19,13 +19,16 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'name',
+        'google_id',
         'email',
         'password',
+        'name',
+        'photo',  
         'slug',
         'is_active',
-        'is_deleted',
         'deleted_description',         
+        'created_by',
+        'deleted_by',
     ];
 
     /**
@@ -68,30 +71,37 @@ class User extends Authenticatable
         return 'slug';
     }
     
-    // Scope to get only not deleted from the table
-    public function scopeNotDeleted($query) {
-        return $query->where('is_deleted', false);
+ 
+    /**
+     * Relationships for audit.
+     */
+    public function creator()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function deleter()
+    {
+        return $this->belongsTo(User::class, 'deleted_by');
     }
     
-    // Accessor to get HTML for is_active
+    /**
+     * Accessor: return HTML state (active/inactive).
+     */
     public function getStateHtmlAttribute()
     {
-        if ($this->is_active === 1 || $this->is_active === true) {
-            return '<span class="text-success">Activo</span>';
-        } elseif ($this->is_active === 0 || $this->is_active === false) {
-            return '<span class="text-danger">Inactivo</span>';
-        }
+        return $this->is_active
+            ? '<span class="text-success">' . __('global.active') . '</span>'
+            : '<span class="text-danger">' . __('global.inactive') . '</span>';
+    }
 
-    }    
-
-    // Accessor to get HTML for is_active
+    /**
+     * Accessor: return plain text state (active/inactive).
+     */
     public function getStateTextAttribute()
     {
-        if ($this->is_active === 1 || $this->is_active === true) {
-            return 'Activo';
-        } elseif ($this->is_active === 0 || $this->is_active === false) {
-            return 'Inactivo';
-        }
-
-    }         
+        return $this->is_active
+            ? __('global.active')
+            : __('global.inactive');
+    }     
 }

@@ -18,6 +18,9 @@ return [
     'destroy'              => 'Eliminar Información',
     'cancel'               => 'Cancelar',
     'back'                 => 'Volver',
+    'export'               => 'Exportar',
+    'excel'                => 'Excel',
+    'pdf'                  => 'Pdf',    
     'show'                 => 'Detalles del Registro',
     'create'               => 'Crear Registro',
     'edit'                 => 'Editar Registro',
@@ -38,6 +41,11 @@ return [
         'complete_attribute' => 'Ingresa :attribute',
         'select_attribute'   => 'Seleccione :attribute',
     ],
-    'card_collapse' => 'Minimizar/Expandir',    
-    
+    'card_collapse'        => 'Minimizar/Expandir',  
+    'record_audit'         => 'Auditoría del registro',    
+    'created_by'           => 'Creado por',
+    'created_at'           => 'Fecha de creación',
+    'deleted_by'           => 'Eliminado por',
+    'deleted_at'           => 'Fecha de eliminación',
+    'deleted_reason'       => 'Motivo de eliminación',
 ];

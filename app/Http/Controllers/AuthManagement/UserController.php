@@ -28,7 +28,7 @@ class UserController extends Controller
     public function index(Request $request, User $user)
     {
         // Base query using scope 'notDeleted' from the model
-        $query = $user::notDeleted();
+        $query = $user::query();
 
         // Filters
         if ($request->filled('name')) {
@@ -73,6 +73,7 @@ class UserController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
+        $user->created_by = auth()->id(); // User in session
 
         // Upload Photo
         if ($request->hasFile('photo')) {
@@ -90,7 +91,7 @@ class UserController extends Controller
         // Redirect to view with success message
         return redirect()
                ->route('auth_management.users.index')
-               ->with('success', 'Registro creado.');
+               ->with('success', __('global.created_success'));
     }
 
     // ------------------------------
@@ -141,7 +142,7 @@ class UserController extends Controller
         // Redirect to view with success message
         return redirect()
                ->route('auth_management.users.index')
-               ->with('success', 'Registro actualizado.');
+               ->with('success', __('global.updated_success'));
     }
 
     // ------------------------------
@@ -156,21 +157,18 @@ class UserController extends Controller
     // Action Update column is_deleted (hide from view)
     public function deleteSave(Request $request, User $user)
     {
-        // Validate the request data
-        $request->validate([
-            'deleted_description' => 'required|string|max:500',
-        ]);
+        // Store reason and who deleted
+        $user->deleted_description = $request->deleted_description;
+        $user->deleted_by = auth()->id();
+        $user->is_active = false; 
+        $user->save();
 
-        // Update the model with the validated data
-        $user->update([
-            'is_active' => false,
-            'is_deleted' => true,
-            'deleted_description' => $request->deleted_description,
-        ]);
+        // Soft delete (sets deleted_at)
+        $user->delete();
 
         return redirect()
                ->route('auth_management.users.index')
-               ->with('success', 'Registro eliminado');
+               ->with('success', __('global.deleted_success'));
     }
 
 }

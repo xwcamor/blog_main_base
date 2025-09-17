@@ -5,8 +5,8 @@
 @section('content')
 <div class="row">
   <div class="col-lg-12">
-    <div class="card">
-      <div class="card-header bg-light border-bottom font-weight-bold">
+    <div class="card card-info rounded">
+      <div class="card-header">
         <i class="fas fa-database"></i> Datos del Registro
         <div class="card-tools">
           <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Minimizar">

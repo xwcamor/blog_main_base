@@ -1,15 +1,16 @@
 @extends('layouts.app')
 
-@section('title', 'Usuario - Nuevo')
+@section('title', __('users.create_title'))
+@section('title_navbar', __('users.singular'))
 
 @section('content')
 <div class="row">
   <div class="col-lg-12">
     <div class="card">
       <div class="card-header bg-light border-bottom font-weight-bold">
-        <i class="fas fa-plus"></i> Crear Registro
+        <h3 class="card-title"><strong><i class="fas fa-plus"></i> {{ __('global.create') }}</strong></h3>
         <div class="card-tools">
-          <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Minimizar">
+          <button type="button" class="btn btn-tool" data-card-widget="collapse" title="{{ __('global.card_collapse') }}">
             <i class="fas fa-minus"></i>
           </button>
         </div>
@@ -19,22 +20,22 @@
         <form id="form-save" action="{{ route('auth_management.users.store') }}" method="POST" enctype="multipart/form-data" data-parsley-validate>
           @csrf          
           <div class="form-group">
-            <label for="name">Nombre <span class="text-danger">(*)</span></label>
-            <input type="text" name="name" id="name" class="form-control" required placeholder="Digite Nombre">
+            <label for="name">{{ __('users.name') }} <span class="text-danger">(*)</span></label>
+            <input type="text" name="name" id="name" class="form-control" data-parsley-minlength="3" required placeholder="{{ __('global.placeholders.complete_attribute', ['attribute' => __('users.name')]) }}">
           </div>
 
           <div class="form-group">
-              <label for="email">Email <span class="text-danger">(*)</span></label>
-              <input type="email" name="email" id="email" class="form-control" required placeholder="Digite Correo Electrónico">
+              <label for="email">{{ __('users.email') }}  <span class="text-danger">(*)</span></label>
+              <input type="email" name="email" id="email" class="form-control" required placeholder="{{ __('global.placeholders.complete_attribute', ['attribute' => __('users.email')]) }}">
           </div>
 
           <div class="form-group">
-            <label for="password">Contraseña <span class="text-danger">(*)</span></label>
-            <input type="password" name="password" id="password" class="form-control" required placeholder="Digite Contraseña" >
+            <label for="password">{{ __('users.password') }}  <span class="text-danger">(*)</span></label>
+            <input type="password" name="password" id="password" class="form-control" required placeholder="{{ __('global.placeholders.complete_attribute', ['attribute' => __('users.password')]) }}" >
           </div>
 
           <div class="form-group">
-              <label for="photo">Foto</label>
+              <label for="photo">{{ __('users.photo') }} </label>
               <input type="file" name="photo" class="form-control">
           </div>          
         </form>
@@ -42,10 +43,10 @@
       
       <div class="card-footer text-center">
         <a href="{{ route('auth_management.users.index') }}" class="btn btn-secondary mr-2">
-          <i class="fas fa-arrow-left"></i> Regresar
+          <i class="fas fa-arrow-left"></i> {{ __('global.back') }}
         </a>
         <button type="button" onclick="submitWithParsley()" class="btn btn-primary">
-          <i class="fas fa-save"></i> Guardar Datos
+          <i class="fas fa-save"></i> {{ __('global.save') }}
         </button>
       </div>
       

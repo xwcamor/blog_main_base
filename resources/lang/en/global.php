@@ -18,6 +18,9 @@ return [
     'destroy'              => 'Delete Information',
     'cancel'               => 'Cancel',
     'back'                 => 'Back',
+    'export'               => 'Export',
+    'excel'                => 'Excel',    
+    'pdf'                  => 'Pdf',
     'show'                 => 'Record Details',
     'create'               => 'Create Record',
     'edit'                 => 'Edit Record',
@@ -38,6 +41,11 @@ return [
         'complete_attribute' => 'Complete :attribute',
         'select_attribute'   => 'Selecione :attribute',
     ],
-    'card_collapse' => 'Collapse/Expand',
-
+    'card_collapse'        => 'Collapse/Expand',
+    'record_audit'         => 'Record audit trail',
+    'created_by'           => 'Created by',
+    'created_at'           => 'Created at',
+    'deleted_by'           => 'Deleted by',
+    'deleted_at'           => 'Deleted at',
+    'deleted_reason'       => 'Reason for deletion',
 ];

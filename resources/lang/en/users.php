@@ -13,5 +13,7 @@ return [
     'name'          => 'Name',
     'email'         => 'Email',
     'password'      => 'Password',
+    'password_confirmation' => 'Password Confirmation',
+    'photo'         => 'Photo',
     'is_active'     => 'Status',
 ];
