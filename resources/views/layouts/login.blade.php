@@ -19,6 +19,9 @@
     <script src="{{ asset('adminlte/js/custom.js') }}"></script>
   </head>
   <body class="login-page">
+    {{-- Navbar con selector de idiomas --}}
+    @include('layouts.navbar_login')
+
     <div class="container">
       <div class="row justify-content-center align-items-center" style="min-height: 100vh;">
         <div class="col-md-10 col-lg-8">

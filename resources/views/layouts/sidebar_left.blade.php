@@ -33,11 +33,13 @@
 
 
     @php
-        $localePrefix = app()->getLocale() . '/setting_management/countries';
+        $localePrefixCountries = app()->getLocale() . '/setting_management/countries';
+        $localePrefixLanguages = app()->getLocale() . '/setting_management/languages';
+        $isSettingsActive = request()->is($localePrefixCountries . '*') || request()->is($localePrefixLanguages . '*');
     @endphp
 
-    <li class="nav-item {{ request()->is($localePrefix . '*') ? 'menu-open' : '' }}">
-        <a href="#" class="nav-link {{ request()->is($localePrefix . '*') ? 'active' : '' }}">
+    <li class="nav-item {{ $isSettingsActive ? 'menu-open' : '' }}">
+        <a href="#" class="nav-link {{ $isSettingsActive ? 'active' : '' }}">
             <i class="nav-icon fas fa-cog"></i>
             <p>
                 {{ __('sidebar.menu_settings') }}
@@ -47,9 +49,16 @@
         <ul class="nav nav-treeview">
             <li class="nav-item">
                 <a href="{{ route('setting_management.countries.index') }}"
-                class="nav-link {{ request()->is($localePrefix . '*') ? 'active' : '' }}">
+                class="nav-link {{ request()->is($localePrefixCountries . '*') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon"></i>
                     <p>{{ __('countries.plural') }}</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('setting_management.languages.index') }}"
+                class="nav-link {{ request()->is($localePrefixLanguages . '*') ? 'active' : '' }}">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>{{ __('languages.plural') }}</p>
                 </a>
             </li>
         </ul>
