@@ -102,11 +102,12 @@
 
 {{-- Language Selector --}}
 <div class="text-center my-2">
-  <select onchange="location = this.value;" class="form-select form-select-sm w-auto d-inline-block">
-    <option value="{{ LaravelLocalization::getLocalizedURL('es', null, [], true) }}" {{ app()->getLocale() == 'es' ? 'selected' : '' }}>Español</option>
-    <option value="{{ LaravelLocalization::getLocalizedURL('en', null, [], true) }}" {{ app()->getLocale() == 'en' ? 'selected' : '' }}>English</option>
-    <option value="{{ LaravelLocalization::getLocalizedURL('pt', null, [], true) }}" {{ app()->getLocale() == 'pt' ? 'selected' : '' }}>Português</option>
-  </select>
+  <div class="dropdown d-inline-block">
+    <button class="btn btn-outline-secondary btn-sm dropdown-toggle" type="button" id="languageDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <i class="fas fa-language mr-1"></i> {{ __('global.languages') }}
+    </button>
+    @include('partials.language_selector_login')
+  </div>
 </div>
 
 @endsection 

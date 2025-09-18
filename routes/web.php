@@ -14,6 +14,7 @@ use App\Http\Controllers\AuthManagement\Auth\ForgotPasswordController;
 use App\Http\Controllers\AuthManagement\Auth\ResetPasswordController;
 use App\Http\Controllers\AuthManagement\UserController;
 use App\Http\Controllers\SettingManagement\CountryController;
+use App\Http\Controllers\SettingManagement\LanguageController;
 //use App\Http\Controllers\LocaleController;
 
 // Localization
@@ -46,9 +47,21 @@ Route::group(
                 Route::get('countries/{country}/delete',        [CountryController::class, 'delete'])    ->name('countries.delete');
                 Route::delete('countries/{country}/deleteSave', [CountryController::class, 'deleteSave'])->name('countries.deleteSave');
                 Route::get('countries/live_edit', [CountryController::class, 'liveEdit'])->name('countries.live_edit');
-                Route::post('countries/update_inline', [CountryController::class, 'updateInline'])->name('countries.update_inline');                
+                Route::post('countries/update_inline', [CountryController::class, 'updateInline'])->name('countries.update_inline');
                 Route::get('countries/export_excel', [CountryController::class, 'exportExcel'])->name('countries.export_excel');
                 Route::get('countries/export_pdf', [CountryController::class, 'exportPdf'])->name('countries.export_pdf');
+
+                // Languages - Export routes BEFORE resource routes
+                Route::get('languages/export_excel', [LanguageController::class, 'exportExcel'])->name('languages.export_excel');
+                Route::get('languages/export_pdf', [LanguageController::class, 'exportPdf'])->name('languages.export_pdf');
+                Route::get('languages/live_edit', [LanguageController::class, 'liveEdit'])->name('languages.live_edit');
+                Route::get('languages/edit_all', [LanguageController::class, 'editAll'])->name('languages.edit_all');
+                Route::post('languages/update_inline', [LanguageController::class, 'updateInline'])->name('languages.update_inline');
+                
+                // Languages resource routes
+                Route::resource('languages', LanguageController::class)->names('languages');
+                Route::get('languages/{language}/delete',        [LanguageController::class, 'delete'])    ->name('languages.delete');
+                Route::delete('languages/{language}/deleteSave', [LanguageController::class, 'deleteSave'])->name('languages.deleteSave');
             });
 
             // Auth Management
@@ -82,8 +95,7 @@ Route::group(
 
         // Legal
         Route::view('/terms', 'legal.terms')->name('terms');
-        Route::view('/privacy', 'legal.privacy')->name('privacy');        
-    
+        Route::view('/privacy', 'legal.privacy')->name('privacy');
 
     }
 );
