@@ -16,6 +16,7 @@ class RolesAndPermissionsSeeder extends Seeder
         // Define module permissions
         $modules = [
             'countries',
+            'languages',
             'users',
             'companies',
         ];
@@ -46,7 +47,9 @@ class RolesAndPermissionsSeeder extends Seeder
         $user->syncPermissions([
             'countries_index',
             'countries_show',
-                        
+            'languages_index',
+            'languages_show',
+
         ]);
     }
 }

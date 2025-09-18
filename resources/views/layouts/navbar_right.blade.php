@@ -50,27 +50,10 @@
 
   {{-- Idiomas --}}
   <li class="nav-item dropdown">
-    <a class="nav-link" data-toggle="dropdown" href="#" title="Seleccionar idioma">
+    <a class="nav-link" data-toggle="dropdown" href="#" title="{{ __('global.languages_available') }}">
       <i class="fas fa-language"></i>
     </a>
-    <div class="dropdown-menu dropdown-menu-right">
-      @foreach (LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
-        @php
-          $flag = match($localeCode) {
-              'es' => 'es',
-              'en' => 'us',
-              'pt' => 'br',
-              default => $localeCode
-          };
-        @endphp
-        <a rel="alternate" hreflang="{{ $localeCode }}"
-           href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}"
-           class="dropdown-item d-flex align-items-center {{ app()->getLocale() === $localeCode ? 'active font-weight-bold' : '' }}">
-          <span class="flag-icon flag-icon-{{ $flag }} mr-2"></span>
-          {{ $properties['native'] }}
-        </a>
-      @endforeach
-    </div>
+    @include('partials.language_selector')
   </li>
 
   {{-- Logout --}}
@@ -101,8 +84,8 @@
 
     {{-- Botón Cambiar Estilo (full clickable) --}}
     <li>
-      <a href="#" class="dropdown-item w-100 d-flex align-items-center theme-switch" id="toggle-darkmode" title="Cambiar estilo" data-theme="dark">
-        <i id="theme-icon" class="fas fa-moon mr-2"></i> Cambiar Estilo
+      <a href="#" class="dropdown-item w-100 d-flex align-items-center theme-switch" id="toggle-darkmode" title="{{ __('global.change_style') }}" data-theme="dark">
+        <i id="theme-icon" class="fas fa-moon mr-2"></i> {{ __('global.change_style') }}
       </a>
     </li>
 
@@ -112,8 +95,8 @@
     <li>
       <form id="logout-form" action="{{ route('logout') }}" method="POST" onsubmit="return confirm('¿Estás seguro que deseas cerrar sesión?')" style="margin: 0;">
         @csrf
-        <button type="submit" class="dropdown-item w-100 d-flex align-items-center"   title="Cerrar sesión">
-          <i class="fas fa-sign-out-alt mr-2"></i> Cerrar Sesión
+        <button type="submit" class="dropdown-item w-100 d-flex align-items-center"   title="{{ __('global.logout') }}">
+          <i class="fas fa-sign-out-alt mr-2"></i> {{ __('global.logout') }}
         </button>
       </form>
     </li>
