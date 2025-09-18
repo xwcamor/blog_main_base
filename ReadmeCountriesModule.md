@@ -17,7 +17,6 @@ Se añadieron botones en la página de índice de países para exportar los dato
   composer require barryvdh/laravel-dompdf
   composer require maatwebsite/excel
   ```
-
 ---
 
 ## 2. Edición Masiva en Vivo (Live Inline Editing)
