@@ -1,9 +1,11 @@
 <?php
 
 return [
+    // Titles
     'singular'        => 'Country',
     'plural'          => 'Countries',
-
+    
+    // Columns
     'index_title'     => 'Country List',
     'create_title'    => 'Country - Create',
     'show_title'      => 'Country - Details',

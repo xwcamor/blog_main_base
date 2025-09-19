@@ -39,10 +39,11 @@
             <a class="btn btn-light" href="{{ route('auth_management.users.edit', $user) }}" title="Editar">
               <i class="fas fa-pen"></i>
             </a>
-            <a class="btn btn-light" href="{{ route('auth_management.users.delete', $user) }}" title="Eliminar">
-              <i class="fas fa-trash"></i>
-            </a>            
-            
+            @if(auth()->id() !== $user->id)
+                <a class="btn btn-light" href="{{ route('auth_management.users.delete', $user) }}" title="Eliminar">
+                    <i class="fas fa-trash"></i>
+                </a>
+            @endif
           </div>
         </td>
       </tr>

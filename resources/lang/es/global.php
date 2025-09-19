@@ -21,6 +21,7 @@ return [
     'export'               => 'Exportar',
     'excel'                => 'Excel',
     'pdf'                  => 'Pdf',    
+    'word'                 => 'Word',
     'show'                 => 'Detalles del Registro',
     'create'               => 'Crear Registro',
     'edit'                 => 'Editar Registro',

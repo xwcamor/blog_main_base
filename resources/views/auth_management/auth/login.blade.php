@@ -1,6 +1,6 @@
 @extends('layouts.login')
 
-@section('title', __('login.login'))
+@section('title', __('auth.login'))
 
 @section('content')
 <div class="card shadow-lg">
@@ -60,7 +60,7 @@
       </div>
 
       <p class="mb-1 text-center pt-2">
-        <a href="{{ route('password.request') }}">{{ __('login.forgot_password') }}</a>
+        <a href="{{ route('password.request') }}">{{ __('auth.forgot_password') }}</a>
       </p>      
 
       <p class="text-center text-sm mt-3">

@@ -20,13 +20,16 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'google_id',
+        'tenant_id',
+        'country_id',
+        'locale_id',
         'email',
         'password',
         'name',
-        'photo',  
+        'photo',
         'slug',
         'is_active',
-        'deleted_description',         
+        'deleted_description',
         'created_by',
         'deleted_by',
     ];
@@ -71,7 +74,17 @@ class User extends Authenticatable
         return 'slug';
     }
     
- 
+    // Relationships
+    public function tenant()
+    {
+        return $this->belongsTo(Tenant::class);
+    }
+
+    public function country()
+    {
+        return $this->belongsTo(Country::class);
+    }    
+
     /**
      * Relationships for audit.
      */
@@ -85,9 +98,7 @@ class User extends Authenticatable
         return $this->belongsTo(User::class, 'deleted_by');
     }
     
-    /**
-     * Accessor: return HTML state (active/inactive).
-     */
+    // Accessor: return HTML state (active/inactive).
     public function getStateHtmlAttribute()
     {
         return $this->is_active
@@ -95,13 +106,25 @@ class User extends Authenticatable
             : '<span class="text-danger">' . __('global.inactive') . '</span>';
     }
 
-    /**
-     * Accessor: return plain text state (active/inactive).
-     */
+    // Accessor: return plain text state (active/inactive).
     public function getStateTextAttribute()
     {
         return $this->is_active
             ? __('global.active')
             : __('global.inactive');
     }     
+   
+    // Accessor: return full URL for photo.
+    public function getPhotoUrlAttribute()
+    {
+        if (!$this->photo) {
+            return asset('adminlte/img/user2-160x160.jpg');
+        }
+
+        if (Str::startsWith($this->photo, ['http://', 'https://'])) {
+            return $this->photo;
+        }
+
+        return asset('storage/' . $this->photo);
+    }    
 }

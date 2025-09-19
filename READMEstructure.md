@@ -82,6 +82,50 @@ This will generate route names like:
 
 ---
 
+## 📁 Translation File Structure
+
+Place your language files here:
+
+```
+/resources/lang/
+  ├── en/global.php
+  ├── es/global.php
+  └── pt/global.php
+```
+---
+
+## 🧩 Using Translations in Views
+
+To display translated text, use the `__()` helper in your Blade templates:
+
+```blade
+{{ __('global.app_name') }}
+{{ __('global.clear') }}
+```
+---
+
+## 📁 Pdf Structure
+
+Place your language files here:
+PDF → resources/views/
+
+```
+/resources/views/
+  ├── {module}/{entity}/pdf/template.blade.php
+```
+
+---
+
+## 📁 Word Structure
+Word → resources/templates/{module}/{entity}/template.docx
+
+---
+
+## 📁 Excel Structure
+Excel → no template (export on app/Exports/…).
+
+---
+
 ## 📌 Final Notes
 
 - Use **PascalCase** for class names (e.g., `CompanyController`, `CompanyStoreRequest`)
@@ -90,5 +134,34 @@ This will generate route names like:
 - This structure is ideal for medium and large Laravel projects with multiple domains/modules
 
 ---
+
+
+## Extra Knowledge
+Add default fk association
+$table->foreignId('region_id')->constrained();
+
+Add specific fk association
+$table->foreignId('default_locale_id')->constrained('locales'); 
+
+Display all data
+Model::create($request->all());
+
+Tenant URL configuration:
+- Edit file C:\laragon\etc\apache2\sites-enabled\00-default.conf
+
+<VirtualHost *:80>
+    DocumentRoot "C:/laragon/www/blog/public"
+    ServerName blog.test
+    ServerAlias *.blog.test
+    <Directory "C:/laragon/www/blog/public">
+        AllowOverride All
+        Require all granted
+    </Directory>
+</VirtualHost>
+
+- Find the  file C:\Windows\System32\drivers\etc\hosts and open it
+
+- Add the following  'hitachi = the on first tenant example' , 'blog=folder-name'
+127.0.0.1      hitachi.blog.test
 
 ©️ **Team Software** – Clean Modular Architecture for Laravel 🚀

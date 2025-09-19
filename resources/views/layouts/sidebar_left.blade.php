@@ -33,7 +33,7 @@
 
 
     @php
-        $localePrefix = app()->getLocale() . '/setting_management/countries';
+        $localePrefix = app()->getLocale() . '/system_management/languages';
     @endphp
 
     <li class="nav-item {{ request()->is($localePrefix . '*') ? 'menu-open' : '' }}">
@@ -46,10 +46,10 @@
         </a>
         <ul class="nav nav-treeview">
             <li class="nav-item">
-                <a href="{{ route('setting_management.countries.index') }}"
+                <a href="{{ route('system_management.languages.index') }}"
                 class="nav-link {{ request()->is($localePrefix . '*') ? 'active' : '' }}">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>{{ __('countries.plural') }}</p>
+                    <p>{{ __('languages.plural') }}</p>
                 </a>
             </li>
         </ul>

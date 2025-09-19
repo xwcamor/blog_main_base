@@ -58,6 +58,9 @@ class GoogleLoginController extends Controller
                 'name' => $googleUser->name,
                 'email' => $googleUser->email,
                 'google_id' => $googleUser->id,
+                'tenant_id' => 1,  
+                'country_id' => 1, 
+                'locale_id' => 1, 
                 'password' => Hash::make(Str::random(24)),
                 'slug' => Str::random(22),
                 'photo' => $googleUser->avatar,
@@ -69,5 +72,7 @@ class GoogleLoginController extends Controller
         } catch (\Exception $e) {
             return redirect('/login')->with('error', __('auth.login_error'));
         }
+        
+
     }
 }

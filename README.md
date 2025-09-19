@@ -70,14 +70,9 @@ This command will perform the following actions:
 1. Drop the current database (if it exists).
 2. Recreate the database.
 3. Run all migrations.
-4. Insert an initial user with:
-   - Email:    `pingo@gmail.com`
-   - Password: `123456`
+4. Insert an initial user
 
 ---
-# Migracion de roles
-php artisan db:seed --class=RolesAndPermissionsSeeder
-
 ## Run the Server
 
 ```bash
@@ -86,6 +81,9 @@ php artisan serve
 
 Open in the browser:
 http://127.0.0.1:8000
+
+Other way to open on browser using laragon
+http://name-folder.test
 
 ---
 

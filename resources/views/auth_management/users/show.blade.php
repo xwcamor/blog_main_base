@@ -27,15 +27,9 @@
 
         <div class="form-group">
           <label for="photo">Foto</label><br>
-          @if($user->photo)
-            <img src="{{ asset('storage/photos/' . $user->photo) }}"
-                class="img-circle elevation-2"
-                width="100"  height="100">
-          @else
-            <img src="{{ asset('adminlte/img/user2-160x160.jpg') }}"
-                class="img-circle elevation-2"
-                width="100" height="100">
-          @endif
+          <img src="{{ $user->photo_url }}"
+              class="img-circle elevation-2"
+              width="100" height="100">
         </div>  
 
         <div class="form-group">

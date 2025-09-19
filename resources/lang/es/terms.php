@@ -1,9 +1,10 @@
 <?php
 
 return [
-
+    // Title
     'title' => 'Términos y Condiciones',
-
+    
+    // Sections
     'sections' => [
 
         [
@@ -77,6 +78,7 @@ que afecten el uso del sistema.',
         ],
 
     ],
-
+    
+    // Footer
     'footer' => "Términos y Condiciones<br><br>© :year :app",
 ];

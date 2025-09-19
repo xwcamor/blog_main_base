@@ -1,9 +1,10 @@
 <?php
 
 return [
-
+    // Title
     'title' => 'Política de Privacidad',
-
+    
+    // Sections
     'sections' => [
 
         [
@@ -65,6 +66,7 @@ return [
         ],
 
     ],
-
+    
+    // Footer
     'footer' => "Política de Privacidad<br><br>© :year :app",
 ];

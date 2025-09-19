@@ -1,9 +1,11 @@
 <?php
 
 return [
+    // Titles
     'singular'      => 'User',
     'plural'        => 'Users',
-
+    
+    // Columns
     'index_title'   => 'User List',
     'create_title'  => 'User - Create',
     'show_title'    => 'User - Details',

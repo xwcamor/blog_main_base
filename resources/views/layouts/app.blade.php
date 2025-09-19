@@ -45,11 +45,16 @@
           <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
               @auth
-                <img src="{{ asset('storage/photos/' .auth()->user()->photo ?? 'adminlte/img/user2-160x160.jpg') }}"
-                     class="img-circle elevation-2" alt="User" width="100">
+                  @php
+                      $photo = auth()->user()->photo;
+                      $isExternal = Str::startsWith($photo, ['http://', 'https://']);
+                  @endphp
+
+                  <img src="{{ $isExternal ? $photo : asset('storage/' . $photo) }}"
+                      class="img-circle elevation-2" alt="User" width="100">
               @else
-                <img src="{{ asset('adminlte/img/user2-160x160.jpg') }}"
-                     class="img-circle elevation-2" alt="Guest" width="100">
+                  <img src="{{ asset('adminlte/img/user2-160x160.jpg') }}"
+                      class="img-circle elevation-2" alt="Guest" width="100">
               @endauth
             </div>
             <div class="info">

@@ -7,13 +7,17 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Hash;
 
-// Use Controllers
+// Use Controllers mandatory
 use App\Http\Controllers\AuthManagement\Auth\LoginController;
 use App\Http\Controllers\AuthManagement\Auth\GoogleLoginController;
 use App\Http\Controllers\AuthManagement\Auth\ForgotPasswordController;
 use App\Http\Controllers\AuthManagement\Auth\ResetPasswordController;
 use App\Http\Controllers\AuthManagement\UserController;
-use App\Http\Controllers\SettingManagement\CountryController;
+use App\Http\Controllers\SystemManagement\SettingController;
+use App\Http\Controllers\SystemManagement\CountryController;
+use App\Http\Controllers\SystemManagement\LanguageController;
+use App\Http\Controllers\DownloadManagement\UserDownloadController;
+
 //use App\Http\Controllers\LocaleController;
 
 // Localization
@@ -39,11 +43,41 @@ Route::group(
                     : redirect()->route('login');
             });
 
-            // Setting Management
-            Route::prefix('setting_management')->name('setting_management.')->group(function () {
+            Route::prefix('download_management')->name('download_management.user_downloads.')->group(function () {
+                Route::get('/', [UserDownloadController::class, 'index'])->name('index');
+                Route::get('/{id}/download', [UserDownloadController::class, 'download'])->name('download');
+                Route::delete('/{id}', [UserDownloadController::class, 'delete'])->name('delete');
+            });
+
+
+            // System Management
+            Route::prefix('system_management')->name('system_management.')->group(function () {
+
+                // Languages - Export routes BEFORE resource routes
+                Route::get('languages/export_excel', [LanguageController::class, 'exportExcel'])->name('languages.export_excel');
+                Route::get('languages/export_pdf', [LanguageController::class, 'exportPdf'])->name('languages.export_pdf');
+                Route::get('languages/export_word', [LanguageController::class, 'exportWord'])->name('languages.export_word');
+                Route::get('languages/edit_all', [LanguageController::class, 'editAll'])->name('languages.edit_all');
+                Route::post('languages/update_inline', [LanguageController::class, 'updateInline'])->name('languages.update_inline');
+                
+                // Languages resource routes
+                Route::resource('languages', LanguageController::class)->names('languages');
+                Route::get('languages/{language}/delete',        [LanguageController::class, 'delete'])    ->name('languages.delete');
+                Route::delete('languages/{language}/deleteSave', [LanguageController::class, 'deleteSave'])->name('languages.deleteSave');                
+
+                // Settings
+                Route::resource('settings', SettingController::class)->names('settings');
+                Route::get('settings/{setting}/delete', [SettingController::class, 'delete'])->name('settings.delete');
+                Route::delete('settings/{setting}/deleteSave', [SettingController::class, 'deleteSave'])->name('settings.deleteSave');
+                Route::get('settings/live_edit', [SettingController::class, 'liveEdit'])->name('settings.live_edit');
+                Route::post('settings/update_inline', [SettingController::class, 'updateInline'])->name('settings.update_inline');                
+                Route::get('settings/export_excel', [SettingController::class, 'exportExcel'])->name('settings.export_excel');
+                Route::get('settings/export_pdf', [SettingController::class, 'exportPdf'])->name('settings.export_pdf');
+
+
                 // Countries
                 Route::resource('countries', CountryController::class)->names('countries');
-                Route::get('countries/{country}/delete',        [CountryController::class, 'delete'])    ->name('countries.delete');
+                Route::get('countries/{country}/delete', [CountryController::class, 'delete'])->name('countries.delete');
                 Route::delete('countries/{country}/deleteSave', [CountryController::class, 'deleteSave'])->name('countries.deleteSave');
                 Route::get('countries/live_edit', [CountryController::class, 'liveEdit'])->name('countries.live_edit');
                 Route::post('countries/update_inline', [CountryController::class, 'updateInline'])->name('countries.update_inline');                
@@ -55,7 +89,7 @@ Route::group(
             Route::prefix('auth_management')->name('auth_management.')->group(function () {
                 // Users
                 Route::resource('users', UserController::class)->names('users');
-                Route::get('users/{user}/delete',        [UserController::class, 'delete'])    ->name('users.delete');
+                Route::get('users/{user}/delete', [UserController::class, 'delete'])->name('users.delete');
                 Route::delete('users/{user}/deleteSave', [UserController::class, 'deleteSave'])->name('users.deleteSave');
             });
         });

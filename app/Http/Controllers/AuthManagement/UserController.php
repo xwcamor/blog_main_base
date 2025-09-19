@@ -1,6 +1,6 @@
 <?php
 
-// Source folder: app\Http\Controllers\SettingManagement\
+// Source folder: app\Http\Controllers\AuthManagement\
 namespace App\Http\Controllers\AuthManagement;
 
 // Allow to use subfolders
@@ -125,15 +125,19 @@ class UserController extends Controller
         // Subir nueva foto
         if ($request->hasFile('photo')) {
             // Eliminar foto anterior si existe
-            if ($user->photo && Storage::exists('public/photos/' . $user->photo)) {
-                Storage::delete('public/photos/' . $user->photo);
+            if ($user->photo && Storage::disk('public')->exists($user->photo)) {
+                Storage::disk('public')->delete($user->photo);
             }
 
             $file = $request->file('photo');
             $slug = Str::slug($user->name) . '-' . uniqid();
             $filename = time() . '_' . $file->getClientOriginalName();
-            $file->storeAs("photos/{$slug}", $filename, 'public');
-            $user->photo = "{$slug}/{$filename}";
+
+            // storeAs devuelve la ruta relativa: "photos/slug/filename.png"
+            $filePath = $file->storeAs("photos/{$slug}", $filename, 'public');
+
+            // Guardamos esa ruta en la BD
+            $user->photo = $filePath;
         }
 
         // Save array data
