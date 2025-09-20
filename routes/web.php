@@ -15,6 +15,7 @@ use App\Http\Controllers\AuthManagement\Auth\ResetPasswordController;
 use App\Http\Controllers\AuthManagement\UserController;
 use App\Http\Controllers\SettingManagement\CountryController;
 use App\Http\Controllers\SettingManagement\WorkerController;
+use App\Http\Controllers\SettingManagement\CompanyController;
 //use App\Http\Controllers\LocaleController;
 
 // Localization
@@ -60,6 +61,14 @@ Route::group(
             Route::resource('workers', WorkerController::class)->names('workers');
             Route::get('workers/{worker}/delete',        [WorkerController::class, 'delete'])    ->name('workers.delete');
             Route::delete('workers/{worker}/deleteSave', [WorkerController::class, 'deleteSave'])->name('workers.deleteSave');
+            });
+
+            // Companies
+            Route::prefix('setting_management')->name('setting_management.')->group(function () {
+            Route::get('companies/fetchRuc', [CompanyController::class, 'fetchRuc'])->name('companies.fetchRuc'); 
+            Route::resource('companies', CompanyController::class)->names('companies');
+            Route::get('companies/{company}/delete', [CompanyController::class, 'delete'])->name('companies.delete');
+            Route::delete('companies/{company}/deleteSave', [CompanyController::class, 'deleteSave'])->name('companies.deleteSave');
             });
 
             
