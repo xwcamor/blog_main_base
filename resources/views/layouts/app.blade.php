@@ -137,6 +137,7 @@
     @include('layouts.plugins.parsley')
     <!-- Page Scripts -->
     @yield('scripts')
-
+    <!-- Stack Scripts -->
+    @stack('scripts')
   </body>
 </html>

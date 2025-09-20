@@ -22,10 +22,7 @@ use Illuminate\Support\Facades\Storage;
 // Main class
 class UserDownloadController extends Controller
 {
-    /**
-     * Action Index
-     * Show only active downloads for the authenticated user
-     */
+    // Index View for only active downloads for the authenticated user
     public function index(Request $request)
     {
         $downloads = Download::active()
@@ -37,10 +34,7 @@ class UserDownloadController extends Controller
         return view('download_management.user_downloads.index', compact('downloads'));
     }
 
-    /**
-     * Action Download
-     * Allow user to download file if not expired
-     */
+    // Action Download to allow user to download file if not expired
     public function download($id)
     {
         $download = Download::where('user_id', Auth::id())
@@ -54,9 +48,22 @@ class UserDownloadController extends Controller
         return Storage::disk($download->disk)->download($download->path, $download->filename);
     }
 
-    /**
-     * Action Delete (user can manually remove from their list)
-     */
+    // Action Get Latest (AJAX endpoint for auto-refresh)
+    public function getLatest(Request $request)
+    {
+        $downloads = Download::active()
+            ->where('user_id', Auth::id())
+            ->orderBy('created_at', 'desc')
+            ->paginate(10)
+            ->appends($request->all());
+
+        return response()->json([
+            'html' => view('download_management.user_downloads.partials.table', compact('downloads'))->render(),
+            'has_processing' => $downloads->where('status', 'processing')->count() > 0
+        ]);
+    }
+
+    // Action Delete (user can manually remove from their list)
     public function delete($id, DownloadService $service)
     {
         $download = Download::where('user_id', Auth::id())->findOrFail($id);

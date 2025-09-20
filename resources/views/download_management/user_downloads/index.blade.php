@@ -1,50 +1,35 @@
 @extends('layouts.app')
 
+@section('title', __('global.my_downloads'))
+@section('title_navbar', __('global.my_downloads'))
+
 @section('content')
-<div class="container">
-    <h3>{{ __('global.my_downloads') }}</h3>
-
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>{{ __('global.filename') }}</th>
-                <th>{{ __('global.type') }}</th>
-                <th>{{ __('global.status') }}</th>
-                <th>{{ __('global.actions') }}</th>
-            </tr>
-        </thead>
-        <tbody>
-            @forelse($downloads as $download)
-                <tr>
-                    <td>{{ $download->filename }}</td>
-                    <td>{{ strtoupper($download->type) }}</td>
-                    <td>
-                        @if($download->status === 'ready')
-                            <span class="badge bg-success">Ready</span>
-                        @elseif($download->status === 'processing')
-                            <span class="badge bg-warning text-dark">Processing</span>
-                        @elseif($download->status === 'expired')
-                            <span class="badge bg-secondary">Expired</span>
-                        @else
-                            <span class="badge bg-danger">Failed</span>
-                        @endif
-                    </td>
-                    <td>
-                        @if($download->status === 'ready')
-                            <a href="{{ route('download_management.user_downloads.download', $download->id) }}" class="btn btn-sm btn-primary">
-                                <i class="fas fa-download"></i> Download
-                            </a>
-                        @endif
-                    </td>
-                </tr>
-            @empty
-                <tr>
-                    <td colspan="4">{{ __('global.no_downloads') }}</td>
-                </tr>
-            @endforelse
-        </tbody>
-    </table>
-
-    {{ $downloads->links() }}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card card-info rounded">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="fas fa-download"></i> {{ __('global.my_downloads') }}
+                </h3>
+                <div class="card-tools">
+                    <button type="button" id="refresh-downloads" class="btn btn-sm btn-primary">
+                        <i class="fas fa-sync-alt"></i> {{ __('global.refresh') }}
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="{{ __('global.card_collapse') }}">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div id="downloads-container">
+                    @include('download_management.user_downloads.partials.table')
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 @endsection
+
+@push('scripts')
+    @include('download_management.user_downloads.partials.scripts')
+@endpush
