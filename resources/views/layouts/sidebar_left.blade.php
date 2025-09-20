@@ -52,6 +52,14 @@
                     <p>{{ __('languages.plural') }}</p>
                 </a>
             </li>
+            <!-- Companies -->
+            <li class="nav-item">
+                <a href="{{ route('system_management.companies.index') }}"
+                class="nav-link {{ request()->is($localePrefix . '/companies*') ? 'active' : '' }}">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>{{ __('companies.plural') }}</p>
+                </a>
+            </li>
         </ul>
     </li>
     

@@ -17,6 +17,7 @@ use App\Http\Controllers\SystemManagement\SettingController;
 use App\Http\Controllers\SystemManagement\CountryController;
 use App\Http\Controllers\SystemManagement\LanguageController;
 use App\Http\Controllers\DownloadManagement\UserDownloadController;
+use App\Http\Controllers\SystemManagement\CompanyController;
 
 //use App\Http\Controllers\LocaleController;
 
@@ -65,6 +66,13 @@ Route::group(
                 Route::get('languages/{language}/delete',        [LanguageController::class, 'delete'])    ->name('languages.delete');
                 Route::delete('languages/{language}/deleteSave', [LanguageController::class, 'deleteSave'])->name('languages.deleteSave');                
 
+                // Companies
+                
+                Route::get('/companies/fetch-ruc/{ruc}', [CompanyController::class, 'fetchRuc'])->name('companies.fetchRuc');
+                Route::resource('companies', CompanyController::class)->names('companies');
+                Route::get('companies/{company}/delete',        [CompanyController::class, 'delete'])    ->name('companies.delete');
+                Route::delete('companies/{company}/deleteSave', [CompanyController::class, 'deleteSave'])->name('companies.deleteSave');
+                
                 // Settings
                 Route::resource('settings', SettingController::class)->names('settings');
                 Route::get('settings/{setting}/delete', [SettingController::class, 'delete'])->name('settings.delete');
