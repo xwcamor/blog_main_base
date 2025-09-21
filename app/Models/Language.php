@@ -44,9 +44,7 @@ class Language extends Model
         return 'slug';
     }
 
-    /**
-     * Relationships for audit.
-     */
+    // Relationships for audit.
     public function creator()
     {
         return $this->belongsTo(User::class, 'created_by');
@@ -57,9 +55,7 @@ class Language extends Model
         return $this->belongsTo(User::class, 'deleted_by');
     }
 
-    /**
-     * Accessor: return HTML state (active/inactive).
-     */
+    // Accessor: return HTML state (active/inactive).
     public function getStateHtmlAttribute()
     {
         return $this->is_active
@@ -67,9 +63,7 @@ class Language extends Model
             : '<span class="badge badge-danger">' . __('global.inactive') . '</span>';
     }
 
-    /**
-     * Accessor: return plain text state (active/inactive).
-     */
+    // Accessor: return plain text state (active/inactive).
     public function getStateTextAttribute()
     {
         return $this->is_active
@@ -77,17 +71,13 @@ class Language extends Model
             : __('global.inactive');
     }
 
-    /**
-     * Scope to filter out deleted records.
-     */
+    // Scope to filter out deleted records.
     public function scopeNotDeleted($query)
     {
         return $query->whereNull('deleted_at');
     }
 
-    /**
-     * Scope to filter by request parameters
-     */
+    // Scope to filter by request parameters
     public function scopeFilter(Builder $query, Request $request): Builder
     {
         // Filter for name

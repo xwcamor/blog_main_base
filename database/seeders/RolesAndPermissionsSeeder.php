@@ -5,48 +5,46 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Illuminate\Support\Facades\DB;
 
 class RolesAndPermissionsSeeder extends Seeder
 {
     public function run(): void
     {
-        // Optional: reset cache
+        // Reset cache
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
-        // Define module permissions
-        $modules = [
-            'countries',
-            'users',
-            'companies',
-        ];
+        // Definir acciones comunes
+        $actions = ['view', 'show', 'create', 'edit', 'delete', 'export'];
 
-        $actions = [
-            'index',   // list
-            'show',    // view one
-            'create',  // create new
-            'edit',    // edit
-            'delete',  // delete
-        ];
+        // Leer módulos desde la tabla system_modules
+        $modules = DB::table('system_modules')->whereNull('deleted_at')->get();
 
-        // Create permissions
+        // Crear permisos dinámicamente
         foreach ($modules as $module) {
             foreach ($actions as $action) {
-                Permission::firstOrCreate(['name' => "{$module}_{$action}"]);
+                Permission::firstOrCreate([
+                    'name' => "{$module->permission_key}.{$action}",
+                    'guard_name' => 'web',
+                ]);
             }
         }
 
-        // Create roles
-        $admin = Role::firstOrCreate(['name' => 'admin']);
-        $user = Role::firstOrCreate(['name' => 'user']);
+        // Crear roles globales
+        $super = Role::firstOrCreate(['name' => 'super', 'guard_name' => 'web']);
+        $admin = Role::firstOrCreate(['name' => 'admin', 'guard_name' => 'web']);
+        $user  = Role::firstOrCreate(['name' => 'user',  'guard_name' => 'web']);
 
-        // Assign all permissions to admin
+        // Super tiene todos los permisos
+        $super->syncPermissions(Permission::all());
+
+        // Admin tiene todos los permisos (igual que super en este caso)
         $admin->syncPermissions(Permission::all());
 
-        // You can assign limited permissions to 'user' role if needed
+        // User tiene permisos limitados
         $user->syncPermissions([
-            'countries_index',
-            'countries_show',
-                        
+            'countries.index',
+            'countries.show',
         ]);
     }
 }

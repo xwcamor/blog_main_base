@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('tenants', function (Blueprint $table) {
             $table->id();
+            $table->string('slug', 22)->unique();
             $table->string('name');
             $table->string('logo')->nullable();
-            $table->string('slug', 22)->unique();
 
             // Functional status (enabled/disabled)
             $table->boolean('is_active')->default(true);

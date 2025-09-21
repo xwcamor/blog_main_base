@@ -13,10 +13,12 @@ use App\Http\Controllers\AuthManagement\Auth\GoogleLoginController;
 use App\Http\Controllers\AuthManagement\Auth\ForgotPasswordController;
 use App\Http\Controllers\AuthManagement\Auth\ResetPasswordController;
 use App\Http\Controllers\AuthManagement\UserController;
+use App\Http\Controllers\DashboardManagement\DashboardController;
+use App\Http\Controllers\DownloadManagement\UserDownloadController;
+use App\Http\Controllers\SystemManagement\SystemModuleController;
 use App\Http\Controllers\SystemManagement\SettingController;
 use App\Http\Controllers\SystemManagement\CountryController;
 use App\Http\Controllers\SystemManagement\LanguageController;
-use App\Http\Controllers\DownloadManagement\UserDownloadController;
 
 //use App\Http\Controllers\LocaleController;
 
@@ -39,10 +41,17 @@ Route::group(
             // Main 
             Route::get('/', function () {
                 return Auth::check()
-                    ? redirect()->route('auth_management.users.index')
+                    ? redirect()->route('dashboard_management.dashboards.index')
                     : redirect()->route('login');
             });
 
+            // Dasboard Management
+            Route::prefix('dashboard_management')->name('dashboard_management.')->group(function () {
+                // Dasboards
+                Route::resource('dashboards', DashboardController::class)->names('dashboards');
+            });                
+            
+            // Download Management
             Route::prefix('download_management')->name('download_management.user_downloads.')->group(function () {
                 Route::get('/', [UserDownloadController::class, 'index'])->name('index');
                  Route::get('/ajax/latest', [UserDownloadController::class, 'getLatest'])->name('latest');
@@ -50,9 +59,21 @@ Route::group(
                 Route::delete('/{id}', [UserDownloadController::class, 'delete'])->name('delete');
             });
 
-
             // System Management
             Route::prefix('system_management')->name('system_management.')->group(function () {
+                // SystemModules - Export routes BEFORE resource routes
+                Route::get('system_modules/export_excel', [SystemModuleController::class, 'exportExcel'])->name('system_modules.export_excel');
+                Route::get('system_modules/export_pdf', [SystemModuleController::class, 'exportPdf'])->name('system_modules.export_pdf');
+                Route::get('system_modules/export_word', [SystemModuleController::class, 'exportWord'])->name('system_modules.export_word');
+                Route::get('system_modules/edit_all', [SystemModuleController::class, 'editAll'])->name('system_modules.edit_all');
+                Route::post('system_modules/update_inline', [SystemModuleController::class, 'updateInline'])->name('system_modules.update_inline');
+
+                // SystemModules
+                Route::resource('system_modules', SystemModuleController::class)->names('system_modules');
+                Route::get('system_modules/{system_module}/delete',        [SystemModuleController::class, 'delete'])    ->name('system_modules.delete');
+                Route::delete('system_modules/{system_module}/deleteSave', [SystemModuleController::class, 'deleteSave'])->name('system_modules.deleteSave');                
+                Route::post('system_modules/{system_module}/permissions', [SystemModuleController::class, 'storePermission'])->name('system_modules.permissions.store');
+                Route::delete('system_modules/{system_module}/permissions/{permission}', [SystemModuleController::class, 'destroyPermission'])->name('system_modules.permissions.destroy');
 
                 // Languages - Export routes BEFORE resource routes
                 Route::get('languages/export_excel', [LanguageController::class, 'exportExcel'])->name('languages.export_excel');

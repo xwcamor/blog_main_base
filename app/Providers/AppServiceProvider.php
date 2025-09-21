@@ -7,6 +7,10 @@ use Illuminate\Pagination\Paginator; // Using Bootstrap Paginate
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 
+// Models and Observers
+use App\Models\SystemModule;
+use App\Observers\SystemModuleObserver;
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -26,12 +30,15 @@ class AppServiceProvider extends ServiceProvider
         // Call Boostrap on paginate
         Paginator::useBootstrap();
 
-        // Compartir tenant_name en todas las vistas
+        // Register Observers 
+        SystemModule::observe(SystemModuleObserver::class);
+
+        // Share tenant_name in all views
         View::composer('*', function ($view) {
             $tenantName = null;
 
             if (Auth::check()) {
-                // Cargar tenant solo si falta
+                // Load and rescue tenant relationship
                 $user = Auth::user()->loadMissing('tenant');
                 $tenantName = $user->tenant ? $user->tenant->name : null;
             }

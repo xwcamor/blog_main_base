@@ -5,8 +5,8 @@
     ========================== -->
     <li class="nav-header">{{ __('sidebar.title_access') }}</li>
 
-    <li class="nav-item {{ request()->is('auth_management/users*') ? 'menu-open' : '' }}">
-        <a href="#" class="nav-link {{ request()->is('auth_management/users*') ? 'active' : '' }}">
+    <li class="nav-item {{ menuOpenClass(['auth_management/users*']) }}">
+        <a href="#" class="nav-link {{ activeClass(['auth_management/users*']) }}">
             <i class="nav-icon fas fa-user"></i>
             <p>
                 {{ __('sidebar.menu_accesses') }}
@@ -16,7 +16,7 @@
         <ul class="nav nav-treeview">
             <li class="nav-item">
                 <a href="{{ route('auth_management.users.index') }}" 
-                   class="nav-link {{ request()->is('auth_management/users*') ? 'active' : '' }}">
+                   class="nav-link {{ activeClass(['auth_management/users*']) }}">
                     <i class="far fa-circle nav-icon"></i>
                     <p>{{ __('sidebar.users') }}</p>
                 </a>
@@ -24,20 +24,13 @@
         </ul>
     </li>
 
- 
-
     <!-- =========================
          SETTINGS
     ========================== -->
     <li class="nav-header">{{ __('sidebar.title_setting') }}</li>
 
-
-    @php
-        $localePrefix = app()->getLocale() . '/system_management/languages';
-    @endphp
-
-    <li class="nav-item {{ request()->is($localePrefix . '*') ? 'menu-open' : '' }}">
-        <a href="#" class="nav-link {{ request()->is($localePrefix . '*') ? 'active' : '' }}">
+    <li class="nav-item {{ menuOpenClass(['system_management/languages*','system_management/system_modules*']) }}">
+        <a href="#" class="nav-link {{ activeClass(['system_management/languages*','system_management/system_modules*']) }}">
             <i class="nav-icon fas fa-cog"></i>
             <p>
                 {{ __('sidebar.menu_settings') }}
@@ -46,16 +39,22 @@
         </a>
         <ul class="nav nav-treeview">
             <li class="nav-item">
+                <a href="{{ route('system_management.system_modules.index') }}"
+                   class="nav-link {{ activeClass(['system_management/system_modules*']) }}">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>{{ __('system_modules.plural') }}</p>
+                </a>
+            </li>
+                        
+            <li class="nav-item">
                 <a href="{{ route('system_management.languages.index') }}"
-                class="nav-link {{ request()->is($localePrefix . '*') ? 'active' : '' }}">
+                   class="nav-link {{ activeClass(['system_management/languages*']) }}">
                     <i class="far fa-circle nav-icon"></i>
                     <p>{{ __('languages.plural') }}</p>
                 </a>
             </li>
+
+
         </ul>
     </li>
-    
-
-
-
 </ul>

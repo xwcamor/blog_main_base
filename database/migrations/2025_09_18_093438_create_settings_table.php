@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('settings', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
             $table->string('slug', 22)->unique();
+            $table->string('name');
 
             // Functional status (enabled/disabled)
             $table->boolean('is_active')->default(true);

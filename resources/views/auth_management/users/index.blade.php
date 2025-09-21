@@ -15,7 +15,7 @@
           </div>
         </div>    
         <div class="card-body">
-          @include('auth_management.users.partials.filters')
+          @include('auth_management.users.partials.index_filters')
         </div>
       </div>
     </div>
@@ -42,7 +42,7 @@
             </div>
           </div>
           <div class="table-responsive">
-            @include('auth_management.users.partials.table')
+            @include('auth_management.users.partials.index_results')
           </div>
         </div>
       </div>

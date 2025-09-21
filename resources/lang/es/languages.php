@@ -11,10 +11,7 @@ return [
     'show_title'      => 'Idioma - Información',
     'edit_title'      => 'Idioma - Editar',
     'delete_title'    => 'Idioma - Eliminar',
-    'live_edit_title' => 'Idioma - Editar todos',
     'edit_all_title'  => 'Idioma - Editar Todo',
-    'edit_all'        => 'Editar Todo',
-    'view_list'       => 'Ver Lista',
     'id'              => 'N°',
     'name'            => 'Nombre',
     'iso_code'        => 'ISO 639-1',    
@@ -27,7 +24,7 @@ return [
     ],
 
     // Export
-    'export_filename' => 'exportacion_idiomas',
+    'export_filename' => 'exportación_idiomas',
     'export_title'    => 'Reporte de Idiomas',
 
     // Validation messages
