@@ -65,11 +65,10 @@
 
       <p class="text-center text-sm mt-3">
         {!! __('global.disclosure', [
-          'terms' => '<a href="' . route('terms') . '" target="_blank">' . __('global.terms') . '</a>',
-          'privacy' => '<a href="' . route('privacy') . '" target="_blank">' . __('global.privacy') . '</a>',
+          'terms' => '<a href="' . route('legal_management.terms') . '" target="_blank">' . __('global.terms') . '</a>',
+          'privacy' => '<a href="' . route('legal_management.privacy') . '" target="_blank">' . __('global.privacy') . '</a>',
         ]) !!}
       </p>
-
     </div>
 
     {{-- Right Side: image --}}

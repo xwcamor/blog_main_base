@@ -4,164 +4,278 @@ This document defines the recommended structure to organize your Laravel applica
 
 ---
 
-## 📁 Controller Structure
+## 🌐 Global Vision
 
-Controllers should be grouped by **domain (module)**. Each module has its own folder under `app/Http/Controllers/`.
+Your application should be structured by **modules (domains)**.  
+Each module groups its **controllers, requests, services, views, exports, and templates**.  
+This ensures **separation of concerns**, maintainability, and scalability.
 
 ```plaintext
-app/
-└── Http/
-    └── Controllers/
-        └── SettingManagement/
-            └── CompanyController.php
+app/                                # Core application code
+├── Http/                           # HTTP layer (controllers, requests, middleware)
+│   ├── Controllers/                # Controllers grouped by module
+│   └── Requests/                   # FormRequests (validation per action)
+│
+├── Models/                         # Eloquent models
+├── Services/                       # Business logic per module
+├── Exports/                        # Excel/CSV/Word export classes
+├── Imports/                        # Excel/CSV import classes
+│
+resources/                          # Frontend assets and templates
+├── views/                          # Blade templates (per module/entity)
+│   └── {module}/{entity}/pdf/      # Blade templates for PDFs
+├── templates/                      # Word templates (.docx)
+└── lang/                           # Multi-language translations (en, es, pt, …)
+│
+storage/                            # Dynamically generated files
+├── app/
+│   ├── pdfs/                       # Generated PDFs
+│   ├── exports/                    # Generated Excel/CSV files
+│   └── imports/                    # Uploaded Excel/CSV files
+│
+routes/                             # Application routes
+├── web.php                         # Web routes (modules, controllers, views)
+├── api.php                         # API routes
+└── console.php                     # Artisan console commands
 ```
 
 ---
 
-## 📁 Form Request Structure
+## 📁 Controller Layer
 
-Form Requests should be grouped by module and entity. Use one file **per action** (`store`, `update`, `delete`) following the pattern: `<Entity><Action>Request.php`.
+- Located in: `app/Http/Controllers/{Module}`  
+- Handles HTTP requests and delegates **business logic** to Services.  
+- Uses **Form Requests** for validation.  
+- Returns **views** or **API responses**.  
 
-```plaintext
-app/
-└── Http/
-    └── Requests/
-        └── SettingManagement/
-            └── Company/
-                ├── CompanyStoreRequest.php
-                ├── CompanyUpdateRequest.php
-                └── CompanyDeleteRequest.php
-```
-
-> ✅ This structure respects **Single Responsibility Principle (SRP)** and allows each request class to handle validation for a single action.
+✅ Controllers must remain **thin**. No heavy business logic.
 
 ---
 
-## 📁 Blade Views Structure
+## 📁 Request Layer (Validation)
 
-Blade views should be organized in folders by module and entity. Use **lowercase** and **plural** folder names (common Laravel RESTful convention).
+- Located in: `app/Http/Requests/{Module}/{Entity}`  
+- Each action has its own request (`Store`, `Update`, `Delete`).  
+- Ensures all inputs are validated before reaching the Controller.  
 
-```plaintext
-resources/
-└── views/
-    └── setting_management/
-        └── companies/
-            ├── index.blade.php
-            ├── create.blade.php
-            ├── edit.blade.php
-            └── show.blade.php
-```
-
-> 💡 Use `snake_case` or `kebab-case` for folder names with multiple words if needed.
+✅ Keeps **validation separate from business logic**.
 
 ---
 
-## 🔀 Route Structure with Module Prefix
+## 📁 Service Layer (Business Logic)
 
-Use `Route::prefix()` and `Route::name()` to group routes by module and keep them clean and maintainable.
+- Located in: `app/Services/{Module}`  
+- Encapsulates **domain logic** (create, update, delete).  
+- Called by Controllers, interacts with Models.  
+
+✅ Services make controllers reusable and testable.
+
+---
+
+## 📁 Model Layer (Database ORM)
+
+- Located in: `app/Models/`  
+- Defines database structure and relationships.  
+- Used by Services to persist and retrieve data.
+
+---
+
+## 📁 View Layer (Presentation)
+
+- Located in: `resources/views/{module}/{entity}`  
+- Uses **lowercase plural folders** (`companies`, `users`, `countries`).  
+- Contains `index`, `create`, `edit`, `show`, plus `partials` and `pdf`.  
+
+✅ Views should rely on **translations** (`lang/`) instead of hardcoded text.
+
+---
+
+## 📁 Word, Excel, CSV and PDF Structure
+
+### 📝 Word Templates
+- Location:  
+
+```plaintext
+resources/templates/{module}/{entity}/template.docx
+```
+
+- Purpose: Word templates are static **source files** with placeholders.  
+- They belong under `resources/` because they are **versionable assets**.
+
+---
+
+### 📊 Excel & CSV
+- Classes for export/import:  
+
+```plaintext
+app/Exports/{Module}/{Entity}Export.php
+app/Imports/{Module}/{Entity}Import.php
+```
+
+- Generated files:  
+
+```plaintext
+storage/app/exports/   # Exported Excel/CSV files
+storage/app/imports/   # Uploaded Excel/CSV files
+```
+
+- Purpose: Business logic for Excel/CSV belongs in `app/Exports` and `app/Imports`.  
+- Generated files go into `storage/` (never versioned).  
+
+---
+
+### 📄 PDF
+- Templates:  
+
+```plaintext
+resources/views/{module}/{entity}/pdf/template.blade.php
+```
+
+- Generated files:  
+
+```plaintext
+storage/app/pdfs/
+```
+
+- Purpose: Blade templates define PDF structure, while actual generated files are stored in `storage/`.
+
+---
+
+### 📌 Best Practices
+- **resources/** → templates that should be versioned (Blade, DOCX).  
+- **app/Exports, app/Imports/** → logic classes for handling data.  
+- **storage/** → dynamically generated files (PDF, Excel, CSV).  
+- **public/** → only for assets that must be publicly accessible (logos, images).  
+
+---
+
+## 📁 Routes Structure
+
+### 1. Root routes file (`routes/web.php`)
+
+Your **root route file** centralizes all modules.  
 
 ```php
-use App\Http\Controllers\SettingManagement\CompanyController;
+<?php
 
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DashboardManagement\DashboardController;
+use App\Http\Controllers\SettingManagement\CompanyController;
+use App\Http\Controllers\UserManagement\UserController;
+
+// Dashboard (default home)
+Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+
+// Setting Management
 Route::prefix('setting-management')->name('setting_management.')->group(function () {
     Route::resource('companies', CompanyController::class);
 });
-```
 
-This will generate route names like:
-
-| HTTP Method | URI                                         | Route Name                              | Action   |
-|-------------|---------------------------------------------|------------------------------------------|----------|
-| GET         | `/setting-management/companies`             | `setting_management.companies.index`     | index    |
-| GET         | `/setting-management/companies/create`      | `setting_management.companies.create`    | create   |
-| POST        | `/setting-management/companies`             | `setting_management.companies.store`     | store    |
-| GET         | `/setting-management/companies/{id}`        | `setting_management.companies.show`      | show     |
-| GET         | `/setting-management/companies/{id}/edit`   | `setting_management.companies.edit`      | edit     |
-| PUT/PATCH   | `/setting-management/companies/{id}`        | `setting_management.companies.update`    | update   |
-| DELETE      | `/setting-management/companies/{id}`        | `setting_management.companies.destroy`   | destroy  |
-
----
-
-## 📁 Translation File Structure
-
-Place your language files here:
-
-```
-/resources/lang/
-  ├── en/global.php
-  ├── es/global.php
-  └── pt/global.php
-```
----
-
-## 🧩 Using Translations in Views
-
-To display translated text, use the `__()` helper in your Blade templates:
-
-```blade
-{{ __('global.app_name') }}
-{{ __('global.clear') }}
-```
----
-
-## 📁 Pdf Structure
-
-Place your language files here:
-PDF → resources/views/
-
-```
-/resources/views/
-  ├── {module}/{entity}/pdf/template.blade.php
+// User Management
+Route::prefix('user-management')->name('user_management.')->group(function () {
+    Route::resource('users', UserController::class);
+});
 ```
 
 ---
 
-## 📁 Word Structure
-Word → resources/templates/{module}/{entity}/template.docx
+### 2. Example Generated Routes
+
+| HTTP Method | URI                                       | Route Name                              | Action   |
+|-------------|-------------------------------------------|------------------------------------------|----------|
+| GET         | `/setting-management/companies`           | `setting_management.companies.index`     | index    |
+| GET         | `/setting-management/companies/create`    | `setting_management.companies.create`    | create   |
+| POST        | `/setting-management/companies`           | `setting_management.companies.store`     | store    |
+| GET         | `/setting-management/companies/{id}`      | `setting_management.companies.show`      | show     |
+| GET         | `/setting-management/companies/{id}/edit` | `setting_management.companies.edit`      | edit     |
+| PUT/PATCH   | `/setting-management/companies/{id}`      | `setting_management.companies.update`    | update   |
+| DELETE      | `/setting-management/companies/{id}`      | `setting_management.companies.destroy`   | destroy  |
 
 ---
 
-## 📁 Excel Structure
-Excel → no template (export on app/Exports/…).
+## 🔗 How Layers Interact (Flow Example)
+
+1. **User** submits a form →  
+2. **Form Request** validates data →  
+3. **Controller** receives validated data →  
+4. **Controller** calls a **Service** →  
+5. **Service** interacts with **Model** (DB) →  
+6. **Controller** returns **View** (Blade or Export) →  
+7. **Translations** ensure multi-language support.
 
 ---
 
-## 📌 Final Notes
+## 🚀 Adding a New Module (Step by Step)
 
-- Use **PascalCase** for class names (e.g., `CompanyController`, `CompanyStoreRequest`)
-- Use **lowercase plural** for view folders (e.g., `companies`)
-- Group everything by module to ensure separation of concerns and maintainability
-- This structure is ideal for medium and large Laravel projects with multiple domains/modules
+1. Create Controller under `app/Http/Controllers/{Module}`  
+2. Create Form Requests under `app/Http/Requests/{Module}/{Entity}`  
+3. Create Service under `app/Services/{Module}/{Entity}Service.php`  
+4. Create Model in `app/Models/{Entity}.php`  
+5. Create Views in `resources/views/{module}/{entity}`  
+6. Add routes in `routes/web.php` with `Route::prefix()` and `Route::resource()`  
+7. Add translations in `/resources/lang/{locale}/global.php`  
 
 ---
 
+## 📌 Best Practices
 
-## Extra Knowledge
-Add default fk association
-$table->foreignId('region_id')->constrained();
+- **Controllers → thin**, **Services → fat**  
+- One **Request per action**  
+- Always use **translation helpers**  
+- Keep **exports/templates** outside the core app  
+- Run `composer dump-autoload -o` after adding new folders/namespaces  
 
-Add specific fk association
-$table->foreignId('default_locale_id')->constrained('locales'); 
+---
 
-Display all data
-Model::create($request->all());
+## 📂 Example Root Tree (with comments)
 
-Tenant URL configuration:
-- Edit file C:\laragon\etc\apache2\sites-enabled\00-default.conf
+```plaintext
+app/                                 # Application core code
+└── Http/                            # HTTP layer
+    └── Controllers/                  # Controllers (per module)
+        └── SettingManagement/        # Example module: Setting Management
+            └── CompanyController.php # Handles company CRUD
+            └── OtherController.php   # Another controller in the module            
+    └── Models/                       # Database models
+        └── Company.php               # Eloquent model for companies            
+    └── Requests/                     # FormRequest validations
+        └── SettingManagement/        # Requests for Setting Management module
+            └── Company/              # Entity: Company
+                ├── CompanyStoreRequest.php   # Validation for creating
+                ├── CompanyUpdateRequest.php  # Validation for updating
+                └── CompanyDeleteRequest.php  # Validation for deleting        
+└── Services/                         # Business logic per module
+    └── SettingManagement/            
+        └── CompanyService.php        # Service with CRUD methods for Company
+        └── OtherService.php          # Example of another service      
+└── Exports/                          # Excel/CSV/Word export classes
+└── Imports/                          # Excel/CSV import classes
 
-<VirtualHost *:80>
-    DocumentRoot "C:/laragon/www/blog/public"
-    ServerName blog.test
-    ServerAlias *.blog.test
-    <Directory "C:/laragon/www/blog/public">
-        AllowOverride All
-        Require all granted
-    </Directory>
-</VirtualHost>
+resources/                            # Views and templates
+└── views/                            # Blade templates
+    └── setting_management/           
+        └── companies/                # Views for Company entity
+            ├── index.blade.php       # List view
+            ├── create.blade.php      # Form to create
+            ├── edit.blade.php        # Form to edit
+            └── show.blade.php        # Detail view
+    └── {module}/{entity}/pdf/        # Blade templates for PDF
+└── templates/                        # Word templates (docx)
+    └── {module}/{entity}/            # Organized by module/entity
+└── lang/                             # Multi-language translations
+    └── en/           
+        └── global.php                # Global translation strings     
 
-- Find the  file C:\Windows\System32\drivers\etc\hosts and open it
+storage/                              # Generated dynamic files
+└── app/
+    ├── pdfs/                         # Generated PDFs
+    ├── exports/                      # Generated Excel/CSV files
+    └── imports/                      # Uploaded Excel/CSV files
 
-- Add the following  'hitachi = the on first tenant example' , 'blog=folder-name'
-127.0.0.1      hitachi.blog.test
+routes/                               # Route definitions
+└── web.php                           # Root route file (loads all module routes)
+```
+
+---
 
 ©️ **Team Software** – Clean Modular Architecture for Laravel 🚀
