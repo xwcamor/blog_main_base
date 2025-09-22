@@ -11,7 +11,8 @@
         @forelse($downloads as $download)
             <tr>
                 <td>{{ $download->filename }}</td>
-                <td>{{ strtoupper($download->type) }}</td>
+                <td>{!! $download->type_html !!}</td>
+
                 <td>
                     @if($download->status === 'ready')
                         <span class="badge bg-success">{{ __('global.ready') }}</span>

@@ -9,3 +9,4 @@ Route::prefix('download_management')->name('download_management.user_downloads.'
     Route::get('/{id}/download', [UserDownloadController::class, 'download'])->name('download');
     Route::delete('/{id}', [UserDownloadController::class, 'delete'])->name('delete');
 });
+ 

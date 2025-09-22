@@ -7,17 +7,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Hash;
 
-
-use App\Http\Controllers\AuthManagement\UserController;
-
-//use App\Http\Controllers\LocaleController;
-
 // Localization
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
-// ------------------------------
-// Languages sources
-// ------------------------------
+use App\Http\Controllers\AuthManagement\UserController;
+ 
 Route::group(
     [
         'prefix' => LaravelLocalization::setLocale(),
@@ -51,7 +45,5 @@ Route::group(
         // Públic
         require __DIR__.'/auth_management.php';
         require __DIR__.'/legal_management.php';        
-    
-
     }
 );

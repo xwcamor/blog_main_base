@@ -17,7 +17,7 @@
         title: '{{ __('global.success') }}',
         text: '{{ session('success') }}',
         showConfirmButton: false,
-        timer: 1000
+        timer: 3000
       });
     @endif
     
@@ -28,7 +28,7 @@
         title: '{{ __('global.error') }}',
         text: '{{ session('error') }}',
         showConfirmButton: false,
-        timer: 2000
+        timer: 3000
       });
     @endif
 

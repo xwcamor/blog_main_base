@@ -17,23 +17,12 @@ use App\Http\Requests\SystemManagement\Language\DeleteRequest;
 // Services
 use App\Services\SystemManagement\LanguageService;
 
-// Excel
-use App\Exports\SystemManagement\Languages\LanguagesExport;
-use Maatwebsite\Excel\Facades\Excel;
-
-// PDF
-use App\Pdfs\SystemManagement\LanguagesPdf;
-use Barryvdh\DomPDF\Facade\Pdf;
-
-// Word
-use App\Exports\SystemManagement\Languages\LanguagesWord;
-
 // Illuminates
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
-// Job
-use App\Jobs\GenerateReportJob;
+// Localization
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 // Main class
 class LanguageController extends Controller
@@ -124,7 +113,7 @@ class LanguageController extends Controller
         $query = $language::query();
 
         // Apply filters
-        $query = $this->applyFilters($query, $request);
+        $query = $query->filter($request);
 
         // Order
         $sort = $request->get('sort', 'id');
@@ -150,53 +139,42 @@ class LanguageController extends Controller
         return response()->json(['success' => true]);
     }
 
-    // Export Excel
-    public function exportExcel(Request $request)
-    {
-        // Data from filters
-        $languages = Language::filter($request)->with('creator')->get();
-        
-        // Generate filename
-        $filename = __('languages.export_filename') . '_' . now()->format('Y-m-d_H-i-s') . '.xlsx';
-        
-        // Export file
-        return Excel::download(new LanguagesExport($languages), $filename);
-    }
-
-    // Export Pdf
-    public function exportPdf2(Request $request, LanguagesPdf $pdfService)
-    {
-        // Data from filters
-        $languages = Language::filter($request)->with('creator')->get();
-        
-        // Generate filename
-        $filename = __('languages.export_filename') . '_' . now()->format('Y-m-d_H-i-s') . '.pdf';
-        
-        // Export file
-        return $pdfService->generate($languages, $filename);
-    }
-
+    // Export PDF (background download)
     public function exportPdf(Request $request)
     {
-        // You can pass filters or data to the Job
-        $filters = $request->all();
-
-        // Dispatch the job to the queue
-        GenerateReportJob::dispatch(auth()->id(), 'pdf', $filters);
+        \App\Jobs\SystemManagement\Languages\GenerateLanguagesPdfJob::dispatch(
+            auth()->id(),
+            $request->all()
+        );
 
         return redirect()
             ->route('download_management.user_downloads.index')
-            ->with('success', 'Your PDF report is being generated. Check your downloads queue soon.');
+            ->with('success', __('global.download_in_queue'));
     }
 
-
-    // Export Word
-    public function exportWord(Request $request, LanguagesWord $wordService)
+    // Export Excel (background download)
+    public function exportExcel(Request $request)
     {
-        $languages = Language::filter($request)->with('creator')->get();
+        \App\Jobs\SystemManagement\Languages\GenerateLanguagesExcelJob::dispatch(
+            auth()->id(),
+            $request->all()
+        );
 
-        $filename = __('languages.export_filename') . '_' . now()->format('Y-m-d_H-i-s') . '.docx';
+        return redirect()
+            ->route('download_management.user_downloads.index')
+            ->with('success', __('global.download_in_queue'));
+    }
 
-        return $wordService->generate($languages, $filename);
-    }    
+    // Export Word (background download)
+    public function exportWord(Request $request)
+    {
+        \App\Jobs\SystemManagement\Languages\GenerateLanguagesWordJob::dispatch(
+            auth()->id(),
+            $request->all()
+        );
+
+        return redirect()
+            ->route('download_management.user_downloads.index')
+            ->with('success', __('global.download_in_queue'));
+    }
 }

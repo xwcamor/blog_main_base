@@ -32,7 +32,9 @@ use App\Exports\SystemManagement\SystemModules\SystemModulesWord;
 // Illuminates
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Log;
+
+// Localization
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 // Job
 use App\Jobs\GenerateReportJob;
@@ -136,18 +138,6 @@ class SystemModuleController extends Controller
     }
 
     // Export Pdf
-    public function exportPdf2(Request $request, SystemModulesPdf $pdfService)
-    {
-        // Data from filters
-        $system_modules = SystemModule::filter($request)->with('creator')->get();
-        
-        // Generate filename
-        $filename = __('system_modules.export_filename') . '_' . now()->format('Y-m-d_H-i-s') . '.pdf';
-        
-        // Export file
-        return $pdfService->generate($system_modules, $filename);
-    }
-
     public function exportPdf(Request $request)
     {
         // You can pass filters or data to the Job

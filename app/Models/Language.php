@@ -78,7 +78,7 @@ class Language extends Model
     }
 
     // Scope to filter by request parameters
-    public function scopeFilter(Builder $query, Request $request): Builder
+    public function scopeFilterx(Builder $query, Request $request): Builder
     {
         // Filter for name
         if ($request->filled('name')) {
@@ -100,5 +100,35 @@ class Language extends Model
 
         return $query;
     }
+
+    // Scope to filter by request parameters or plain array
+    public function scopeFilter(Builder $query, Request|array $filters): Builder
+    {
+        // Convert array to Request if needed
+        if (is_array($filters)) {
+            $filters = new Request($filters);
+        }
+
+        // Filter for name
+        if ($filters->filled('name')) {
+            $query->where('name', 'like', '%' . $filters->name . '%');
+        }
+        
+        // Filter for is_active
+        if ($filters->filled('is_active')) {
+            $query->where('is_active', (int) $filters->is_active);
+        }
+
+        // Order
+        $sort = $filters->get('sort', 'id');
+        $direction = $filters->get('direction', 'asc');
+
+        if (in_array($sort, ['id', 'name', 'is_active']) && in_array($direction, ['asc', 'desc'])) {
+            $query->orderBy($sort, $direction);
+        }
+
+        return $query;
+    }
+
 
 }
