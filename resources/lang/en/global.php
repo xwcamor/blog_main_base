@@ -60,5 +60,8 @@ return [
     'expired'              => 'Expired',
     'failed'               => 'Failed',
     'no_downloads'         => 'No downloads available',
-    'download_ready'       => 'Your download is ready',    
+    'download_ready'       => 'Your download is ready',
+    'waiting_for_download' => 'Waiting for download to complete...',
+    'auto_refresh_stopped' => 'Auto-refresh stopped.',
+    'pdf_generation_started' => 'Your PDF report is being generated. You will be automatically redirected to downloads.',
 ];

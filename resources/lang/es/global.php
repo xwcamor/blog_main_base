@@ -60,5 +60,8 @@ return [
     'expired'              => 'Expirado',
     'failed'               => 'Fallido',
     'no_downloads'         => 'No hay descargas disponibles',
-    'download_ready'       => 'Tu descarga está lista',    
+    'download_ready'       => 'Tu descarga está lista',
+    'waiting_for_download' => 'Esperando que se complete la descarga...',
+    'auto_refresh_stopped' => 'Actualización automática detenida.',
+    'pdf_generation_started' => 'Su reporte PDF se está generando. Será redirigido automáticamente a descargas.',
 ];

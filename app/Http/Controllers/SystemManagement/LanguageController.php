@@ -32,6 +32,9 @@ use App\Exports\SystemManagement\Languages\LanguagesWord;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
+// Localization
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+
 // Job
 use App\Jobs\GenerateReportJob;
 
@@ -153,12 +156,16 @@ class LanguageController extends Controller
     // Export Excel
     public function exportExcel(Request $request)
     {
+        // Set locale for this request
+        $currentLocale = LaravelLocalization::getCurrentLocale();
+        app()->setLocale($currentLocale);
+
         // Data from filters
         $languages = Language::filter($request)->with('creator')->get();
-        
+
         // Generate filename
         $filename = __('languages.export_filename') . '_' . now()->format('Y-m-d_H-i-s') . '.xlsx';
-        
+
         // Export file
         return Excel::download(new LanguagesExport($languages), $filename);
     }
@@ -166,12 +173,16 @@ class LanguageController extends Controller
     // Export Pdf
     public function exportPdf2(Request $request, LanguagesPdf $pdfService)
     {
+        // Set locale for this request
+        $currentLocale = LaravelLocalization::getCurrentLocale();
+        app()->setLocale($currentLocale);
+
         // Data from filters
         $languages = Language::filter($request)->with('creator')->get();
-        
+
         // Generate filename
         $filename = __('languages.export_filename') . '_' . now()->format('Y-m-d_H-i-s') . '.pdf';
-        
+
         // Export file
         return $pdfService->generate($languages, $filename);
     }
@@ -181,22 +192,29 @@ class LanguageController extends Controller
         // You can pass filters or data to the Job
         $filters = $request->all();
 
-        // Dispatch the job to the queue
-        GenerateReportJob::dispatch(auth()->id(), 'pdf', $filters);
+        // Get current locale from URL
+        $currentLocale = LaravelLocalization::getCurrentLocale();
+
+        // Dispatch the job to the queue with locale
+        GenerateReportJob::dispatch(auth()->id(), 'pdf', $filters, $currentLocale);
 
         return redirect()
             ->route('download_management.user_downloads.index')
-            ->with('success', 'Your PDF report is being generated. Check your downloads queue soon.');
+            ->with('success', __('global.pdf_generation_started'));
     }
 
 
     // Export Word
     public function exportWord(Request $request, LanguagesWord $wordService)
     {
+        // Set locale for this request
+        $currentLocale = LaravelLocalization::getCurrentLocale();
+        app()->setLocale($currentLocale);
+
         $languages = Language::filter($request)->with('creator')->get();
 
         $filename = __('languages.export_filename') . '_' . now()->format('Y-m-d_H-i-s') . '.docx';
 
         return $wordService->generate($languages, $filename);
-    }    
+    }
 }

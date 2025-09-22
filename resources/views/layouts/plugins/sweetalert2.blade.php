@@ -10,14 +10,14 @@
       timerProgressBar: true          // Display a progress bar
     });
     
-    // Session success   
+    // Session success
     @if (session('success'))
       Toast.fire({
         icon: 'success',
         title: '{{ __('global.success') }}',
         text: '{{ session('success') }}',
         showConfirmButton: false,
-        timer: 1000
+        timer: 2000
       });
     @endif
     

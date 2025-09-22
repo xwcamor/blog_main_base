@@ -23,17 +23,19 @@ class GenerateReportJob implements ShouldQueue
     protected $userId;
     protected $type;       // pdf, excel, word
     protected $data;       // data to export
+    protected $locale;     // locale for translations
 
     protected $download;   // download record
 
     /**
      * Create a new job instance.
      */
-    public function __construct(int $userId, string $type, array $data = [])
+    public function __construct(int $userId, string $type, array $data = [], string $locale = 'en')
     {
         $this->userId = $userId;
         $this->type   = $type;
         $this->data   = $data;
+        $this->locale = $locale;
     }
 
     /**
@@ -138,7 +140,7 @@ class GenerateReportJob implements ShouldQueue
     {
         try {
             // Set locale for translations
-            app()->setLocale('es');
+            app()->setLocale($this->locale);
             
             // Generate PDF and get the binary content
             $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView(

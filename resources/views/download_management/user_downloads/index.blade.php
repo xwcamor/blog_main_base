@@ -21,6 +21,9 @@
                 </div>
             </div>
             <div class="card-body">
+                <div id="auto-refresh-indicator" class="alert alert-info d-none">
+                    <i class="fas fa-spinner fa-spin"></i> {{ __('global.waiting_for_download') }}
+                </div>
                 <div id="downloads-container">
                     @include('download_management.user_downloads.partials.table')
                 </div>
