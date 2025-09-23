@@ -35,7 +35,7 @@ class LoginController extends Controller
             
             // Redirect to User Dashboard
             return redirect()
-                   ->route('auth_management.users.index')
+                   ->route('dashboard_management.dashboards.index')
                    ->with('success', __('auth.start_session'));
         }
 

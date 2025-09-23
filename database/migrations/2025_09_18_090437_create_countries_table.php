@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('countries', function (Blueprint $table) {
             $table->id();
+            $table->string('slug', 22)->unique();
             $table->foreignId('region_id')->constrained();
             $table->string('name');          // Perú
             $table->char('iso_code', 2);     // PE
             $table->string('currency', 3);   // PEN
             $table->string('timezone');      // America/Lima
             $table->foreignId('default_locale_id')->constrained('locales');
-            $table->string('slug', 22)->unique();
 
             // Functional status (enabled/disabled)
             $table->boolean('is_active')->default(true);

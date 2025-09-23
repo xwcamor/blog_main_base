@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('locales', function (Blueprint $table) {
             $table->id();
+            $table->string('slug', 22)->unique();            
             $table->string('code', 10);    // es_PE, es_VE, pt_BR
             $table->string('name');        // Español (Perú), Español (Venezuela)
             $table->foreignId('language_id')->constrained();       
-            $table->string('slug', 22)->unique();
 
             // Functional status (enabled/disabled)
             $table->boolean('is_active')->default(true);

@@ -2,9 +2,9 @@
 
 
 
-  {{-- Mensajes --}}
+  {{-- Messages --}}
   <li class="nav-item dropdown">
-    <a class="nav-link" data-toggle="dropdown" href="#" title="Mensajes">
+    <a class="nav-link" data-toggle="dropdown" href="#" title="{{ __('global.messages') }}">
       <i class="far fa-comments"></i>
       <span class="badge badge-danger navbar-badge">3</span>
     </a>
@@ -26,9 +26,9 @@
     </div>
   </li>
 
-  {{-- Notificaciones --}}
+  {{-- Notifications --}}
   <li class="nav-item dropdown">
-    <a class="nav-link" data-toggle="dropdown" href="#" title="Notificaciones">
+    <a class="nav-link" data-toggle="dropdown" href="#" title="{{ __('global.notifications') }}">
       <i class="far fa-bell"></i>
       <span class="badge badge-warning navbar-badge">15</span>
     </a>
@@ -41,16 +41,16 @@
     </div>
   </li>
 
-  {{-- Herramientas (cuadro) --}}
+  {{-- Tools (cuadro) --}}
   <li class="nav-item">
-    <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button" title="Herramientas">
+    <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button" title="{{ __('global.tools') }}">
       <i class="fas fa-th-large"></i>
     </a>
   </li>
 
-  {{-- Idiomas --}}
+  {{-- Languages --}}
   <li class="nav-item dropdown">
-    <a class="nav-link" data-toggle="dropdown" href="#" title="Seleccionar idioma">
+    <a class="nav-link" data-toggle="dropdown" href="#" title="{{ __('global.change_language') }}">
       <i class="fas fa-language"></i>
     </a>
     <div class="dropdown-menu dropdown-menu-right">
@@ -73,17 +73,13 @@
     </div>
   </li>
 
-  {{-- Logout --}}
-  <li class="nav-item">
-
-  </li>
- 
+  
  
 {{-- Perfil de usuario con menú de configuración --}}
-<li class="nav-item dropdown user-menu">
+<li class="nav-item dropdown user-menu" >
   {{-- Ícono redondo con inicial --}}
   <a href="#" class="nav-link dropdown-toggle d-flex align-items-center justify-content-center rounded-circle bg-dark text-white"
-     data-toggle="dropdown" aria-expanded="false"
+     data-toggle="dropdown" aria-expanded="false" title="{{ __('global.profile') }}"
      style="width: 35px; height: 35px; font-weight: bold;">
     {{ strtoupper(auth()->user()->name[0] ?? 'U') }}
   </a>
@@ -101,8 +97,8 @@
 
     {{-- Botón Cambiar Estilo (full clickable) --}}
     <li>
-      <a href="#" class="dropdown-item w-100 d-flex align-items-center theme-switch" id="toggle-darkmode" title="Cambiar estilo" data-theme="dark">
-        <i id="theme-icon" class="fas fa-moon mr-2"></i> Cambiar Estilo
+      <a href="#" class="dropdown-item w-100 d-flex align-items-center theme-switch" id="toggle-darkmode" title="{{ __('global.change_theme') }}" data-theme="dark">
+        <i id="theme-icon" class="fas fa-moon mr-2"></i> {{ __('global.change_theme') }}
       </a>
     </li>
 
@@ -112,8 +108,8 @@
     <li>
       <form id="logout-form" action="{{ route('logout') }}" method="POST" onsubmit="return confirm('¿Estás seguro que deseas cerrar sesión?')" style="margin: 0;">
         @csrf
-        <button type="submit" class="dropdown-item w-100 d-flex align-items-center"   title="Cerrar sesión">
-          <i class="fas fa-sign-out-alt mr-2"></i> Cerrar Sesión
+        <button type="submit" class="dropdown-item w-100 d-flex align-items-center" title="{{ __('global.logout') }}">
+          <i class="fas fa-sign-out-alt mr-2"></i > {{ __('global.logout') }}
         </button>
       </form>
     </li>

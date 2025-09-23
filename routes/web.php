@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Hash;
 
+<<<<<<< HEAD
 // Use Controllers mandatory
 use App\Http\Controllers\AuthManagement\Auth\LoginController;
 use App\Http\Controllers\AuthManagement\Auth\GoogleLoginController;
@@ -20,12 +21,13 @@ use App\Http\Controllers\DownloadManagement\UserDownloadController;
 use App\Http\Controllers\CompanyManagement\CompanyController;
 //use App\Http\Controllers\LocaleController;
 
+=======
+>>>>>>> 98c171f0bd6fbfb0355e8b47781485be25785da5
 // Localization
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
-// ------------------------------
-// Languages sources
-// ------------------------------
+use App\Http\Controllers\AuthManagement\UserController;
+ 
 Route::group(
     [
         'prefix' => LaravelLocalization::setLocale(),
@@ -39,9 +41,10 @@ Route::group(
             // Main 
             Route::get('/', function () {
                 return Auth::check()
-                    ? redirect()->route('auth_management.users.index')
+                    ? redirect()->route('dashboard_management.dashboards.index')
                     : redirect()->route('login');
             });
+<<<<<<< HEAD
 
             Route::prefix('download_management')->name('download_management.user_downloads.')->group(function () {
                 Route::get('/', [UserDownloadController::class, 'index'])->name('index');
@@ -88,6 +91,13 @@ Route::group(
             
             });
 
+=======
+            
+            require __DIR__.'/system_management.php';
+            require __DIR__.'/dashboard_management.php';
+            require __DIR__.'/download_management.php';
+    
+>>>>>>> 98c171f0bd6fbfb0355e8b47781485be25785da5
             // Auth Management
             Route::prefix('auth_management')->name('auth_management.')->group(function () {
                 // Users
@@ -111,31 +121,8 @@ Route::group(
 
         });
 
-        // Login
-        Route::get('login',   [LoginController::class, 'login'])->name('login');
-        Route::post('login',  [LoginController::class, 'loginAccess'])->name('login.post');
-        Route::post('logout', [LoginController::class, 'logout'])->name('logout');
-
-
-        // Google login
-        Route::prefix('auth_management')->name('auth_management.')->group(function () {
-            Route::controller(GoogleLoginController::class)->group(function () {
-                Route::get('google/redirect', 'redirectToGoogle')->name('google.redirect');
-                Route::get('google/callback', 'handleGoogleCallback')->name('google.callback');
-            });
-        });
-
-        // Forgot password
-        Route::get('password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->middleware('guest')->name('password.request');
-        Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->middleware('guest')->name('password.email');
-        Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->middleware('guest')->name('password.reset');
-        Route::post('password/reset', [ResetPasswordController::class, 'reset'])->middleware('guest')->name('password.update');
-
-        // Legal
-        Route::view('/terms', 'legal.terms')->name('terms');
-        Route::view('/privacy', 'legal.privacy')->name('privacy');        
-    
-
+        // Públic
+        require __DIR__.'/auth_management.php';
+        require __DIR__.'/legal_management.php';        
     }
 );
- 

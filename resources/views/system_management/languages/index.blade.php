@@ -12,7 +12,7 @@
           <i class="fas fa-filter"></i> {{ __('global.card_title_filter') }}
         </h3>
         <div class="card-tools">
-          <button type="button" class="btn btn-tool" data-card-widget="collapse" title="{{ __('global.card_collapse') }}">
+          <button type="button" class="btn btn-tool" data-card-widget="collapse" title="{{ __('global.collapse') }}">
             <i class="fas fa-minus"></i>
           </button>
         </div>
@@ -49,7 +49,7 @@
             <i class="fas fa-plus"></i> <span class="d-none d-sm-inline">{{ __('global.create') }}</span>
           </a>
           <a class="btn btn-sm bg-olive mr-2" href="{{ route('system_management.languages.edit_all') }}">
-            <i class="fas fa-edit"></i> <span class="d-none d-sm-inline">{{ __('languages.edit_all') }}</span>
+            <i class="fas fa-edit"></i> <span class="d-none d-sm-inline">{{ __('global.edit_all') }}</span>
           </a>
           <!-- Export Dropdown -->
           <div class="btn-group">
@@ -68,7 +68,7 @@
               </a>              
             </div>
           </div>
-          <button type="button" class="btn btn-tool" data-card-widget="collapse" title="{{ __('global.card_collapse') }}">
+          <button type="button" class="btn btn-tool" data-card-widget="collapse" title="{{ __('global.collapse') }}">
             <i class="fas fa-minus"></i>
           </button>
         </div>
@@ -81,8 +81,4 @@
     </div>
   </div>
 </div>
-@endsection
-
-@push('scripts')
-@include('layouts.plugins.parsley')
-@endpush
+@endsection 

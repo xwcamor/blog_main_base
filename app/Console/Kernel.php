@@ -21,9 +21,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
+        // Run daily at midnight
+        $schedule->command('downloads:clean')->daily();
         // $schedule->command('inspire')->hourly();
     }
-
     /**
      * Registra los comandos y rutas de consola.
      */
@@ -33,7 +34,5 @@ class Kernel extends ConsoleKernel
 
         require base_path('routes/console.php');
     }
-
-    
-
+ 
 }

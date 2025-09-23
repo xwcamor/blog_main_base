@@ -28,9 +28,9 @@ class DeleteRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'deleted_description.required' => __('languages.deleted_description_required'),
-            'deleted_description.min' => __('languages.deleted_description_min'),
-            'deleted_description.max' => __('languages.deleted_description_max'),
+            'deleted_description.required' => __('system_modules.deleted_description_required'),
+            'deleted_description.min' => __('system_modules.deleted_description_min'),
+            'deleted_description.max' => __('system_modules.deleted_description_max'),
         ];
     }
 }

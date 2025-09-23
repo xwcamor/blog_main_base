@@ -1,6 +1,6 @@
 <?php
 
-// Namspace
+// Namespace
 namespace App\Exports\SystemManagement\Languages;
 
 // Word Library
@@ -9,12 +9,12 @@ use PhpOffice\PhpWord\TemplateProcessor;
 // Main class
 class LanguagesWord
 {
-    public function generate($languages, $filename)
+    // Generate Word
+    public function generate($languages, string $filename): void
     {
         // Create template
         $template = new TemplateProcessor(
             resource_path('templates/system_management/languages/template.docx')
-            
         );
 
         // Title and date
@@ -30,9 +30,8 @@ class LanguagesWord
         $template->setValue('header_created_at', __('global.created_at'));
         $template->setValue('header_creator', __('global.created_by'));
 
-        // CRows
+        // Rows
         $template->cloneRow('no', count($languages));
-
         foreach ($languages as $i => $language) {
             $row = $i + 1;
             $template->setValue("no#{$row}", $row);
@@ -42,12 +41,8 @@ class LanguagesWord
             $template->setValue("created_at#{$row}", formatDateTime($language->created_at));
             $template->setValue("creator#{$row}", $language->creator->name ?? '-');
         }
-        
-        // Create file
-        $tempFile = tempnam(sys_get_temp_dir(), 'word');
-        $template->saveAs($tempFile);
-        
-        // Download file
-        return response()->download($tempFile, $filename)->deleteFileAfterSend(true);
+
+        // Save to provided path
+        $template->saveAs($filename);
     }
 }

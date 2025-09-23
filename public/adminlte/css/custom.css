@@ -25,9 +25,9 @@
   color: white;
 }
 
-label:not(.form-check-label):not(.custom-file-label) {
+/* label:not(.form-check-label):not(.custom-file-label) {
   font-weight: 500 !important;
-}      
+}       */
 
 .parsley-success {
   border-color: green; /* Borde verde para campos válidos */

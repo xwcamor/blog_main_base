@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('regions', function (Blueprint $table) {
             $table->id();
-            $table->string('name'); // Ej: América del Sur
             $table->string('slug', 22)->unique();
+            $table->string('name'); // Ej: América del Sur
 
             // Functional status (enabled/disabled)
             $table->boolean('is_active')->default(true);

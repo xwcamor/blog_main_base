@@ -49,7 +49,7 @@ If this is a new project, change `DB_DATABASE` to the appropriate name (e.g., `a
 php artisan key:generate
 ```
 
-5. Clear temporary cache and old configurations:
+5. Clear temporary cache and old configurations (not required when clone repository):
 
 ```bash
 php artisan optimize:clear
@@ -91,3 +91,47 @@ http://name-folder.test
 
 - Email:    `pingo@gmail.com`  
 - Password: `123456`
+
+---
+
+## Extra commands
+
+- Check Laravel Version
+
+```bash
+laravel -V
+```
+
+- Check Composer Version
+
+```bash
+composer -V
+```
+
+- Rebuilds the autoload files in an optimized way, creating a full classmap.
+
+```bash
+composer dump-autoload -o
+```
+
+-  Start jobs on new terminal for download process
+
+```bash
+php artisan queue:work
+```
+
+---
+
+## Issues with laragon
+
+Open file: C:\laragon\bin\php\php-8.3.16-Win32-vs16-x64\php.ini and find the name "extension=zip"
+
+```bash
+;extension=zip
+```
+
+Uncomment the line and should be this:
+
+```bash
+extension=zip
+```

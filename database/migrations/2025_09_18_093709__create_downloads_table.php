@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('downloads', function (Blueprint $table) {
             $table->id();
-
+            $table->string('slug', 22)->unique();
+            
             // Tipo de archivo generado
             $table->enum('type', ['pdf', 'excel', 'word']);
 

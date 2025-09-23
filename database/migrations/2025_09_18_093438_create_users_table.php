@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->string('slug', 22)->unique();
             $table->foreignId('tenant_id')->constrained();  
             $table->foreignId('country_id')->constrained();
             $table->foreignId('locale_id')->constrained();            
@@ -20,8 +21,7 @@ return new class extends Migration
             $table->string('google_id')->nullable()->unique();            
             $table->string('password')->nullable();
             $table->string('name');            
-            $table->string('photo')->nullable();            
-            $table->string('slug', 22)->unique();
+            $table->string('photo')->nullable();          
             $table->rememberToken();
             $table->timestamp('email_verified_at')->nullable();
 

@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('languages', function (Blueprint $table) {
             $table->id();
+            $table->string('slug', 22)->unique();
             $table->string('iso_code', 10); // es, en, pt, de
             $table->string('name');        // Español, English, Português, Deutsch            
-            $table->string('slug', 22)->unique();
 
             // Functional status (enabled/disabled)
             $table->boolean('is_active')->default(true);

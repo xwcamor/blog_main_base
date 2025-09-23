@@ -12,7 +12,7 @@
           <i class="fas fa-plus"></i> {{ __('global.create') }}
         </h3>
         <div class="card-tools">
-          <button type="button" class="btn btn-tool" data-card-widget="collapse" title="{{ __('global.card_collapse') }}">
+          <button type="button" class="btn btn-tool" data-card-widget="collapse" title="{{ __('global.collapse') }}">
             <i class="fas fa-minus"></i>
           </button>
         </div>
