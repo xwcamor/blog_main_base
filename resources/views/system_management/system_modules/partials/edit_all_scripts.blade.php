@@ -35,7 +35,7 @@ $(document).ready(function() {
         element.css('opacity', '0.6');
 
         $.ajax({
-            url: "{{ route('system_management.languages.update_inline') }}",
+            url: "{{ route('system_management.system_modules.update_inline') }}",
             method: 'POST',
             data: {
                 _token: "{{ csrf_token() }}",

@@ -49,7 +49,7 @@ class SystemModuleController extends Controller
         $system_modules = SystemModule::filter($request)
             ->paginate(10) // Pagination for 10 rows
             ->appends($request->all());
- 
+
         // Return data to index
         return view('system_management.system_modules.index', compact('system_modules'));
     }
@@ -67,7 +67,7 @@ class SystemModuleController extends Controller
         // Using Service from app/Services
         $service->create($request->validated());
 
-        // Redirect to view with success message 
+        // Redirect to view with success message
         return redirect()
             ->route('system_management.system_modules.index')
             ->with('success', __('global.created_success'));
@@ -78,7 +78,7 @@ class SystemModuleController extends Controller
     {
         // Find by Slug
         $system_module = SystemModule::withTrashed()->where('slug', $slug)->firstOrFail();
-        
+
         // Displays show.blade.php
         return view('system_management.system_modules.show', compact('system_module'));
     }
@@ -98,8 +98,8 @@ class SystemModuleController extends Controller
     {
         // Using Service from app/Services
         $service->update($system_module, $request->validated());
-        
-        // Redirect to view with success message 
+
+        // Redirect to view with success message
         return redirect()
             ->route('system_management.system_modules.index')
             ->with('success', __('global.updated_success'));
@@ -117,8 +117,8 @@ class SystemModuleController extends Controller
     {
         // Using Service from app/Services
         $service->delete($system_module, $request->deleted_description);
-        
-        // Redirect to view with success message 
+
+        // Redirect to view with success message
         return redirect()
             ->route('system_management.system_modules.index')
             ->with('success', __('global.deleted_success'));
@@ -129,10 +129,10 @@ class SystemModuleController extends Controller
     {
         // Data from filters
         $system_modules = SystemModule::filter($request)->with('creator')->get();
-        
+
         // Generate filename
         $filename = __('system_modules.export_filename') . '_' . now()->format('Y-m-d_H-i-s') . '.xlsx';
-        
+
         // Export file
         return Excel::download(new SystemModulesExport($system_modules), $filename);
     }
@@ -160,9 +160,41 @@ class SystemModuleController extends Controller
         $filename = __('system_modules.export_filename') . '_' . now()->format('Y-m-d_H-i-s') . '.docx';
 
         return $wordService->generate($system_modules, $filename);
-    }    
+    }
 
- 
+    // Edit All View (like index but with inline editing)
+    public function editAll(Request $request, SystemModule $system_module)
+    {
+        // Base query using scope 'notDeleted' from the model
+        $query = $system_module::query();
+
+        // Apply filters
+        $query = $query->filter($request);
+
+        // Order
+        $sort = $request->get('sort', 'id');
+        $direction = $request->get('direction', 'asc');
+
+        if (in_array($sort, ['id', 'name', 'permission_key']) && in_array($direction, ['asc', 'desc'])) {
+            $query->orderBy($sort, $direction);
+        }
+
+        // Pagination for 10 rows
+        $system_modules = $query->paginate(10)->appends($request->all());
+
+        return view('system_management.system_modules.edit_all', compact('system_modules'));
+    }
+
+    // Action Update inline
+    public function updateInline(Request $request)
+    {
+        $system_module = SystemModule::findOrFail($request->id);
+        $system_module->{$request->field} = $request->value;
+        $system_module->save();
+
+        return response()->json(['success' => true]);
+    }
+
     public function storePermission(Request $request, SystemModule $system_module)
     {
         $request->validate([
