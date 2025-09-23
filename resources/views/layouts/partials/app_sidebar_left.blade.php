@@ -57,4 +57,32 @@
 
         </ul>
     </li>
+
+
+    <!-- =========================
+         COMPANYS
+    ========================== -->
+    <li class="nav-header">{{ __('sidebar.title_Companies') }}</li>
+
+    <li class="nav-item {{ menuOpenClass(['company_management/companies*']) }}">
+        <a href="#" class="nav-link {{ activeClass(['company_management/companies*']) }}">
+            <i class="nav-icon fas fa-cog"></i>
+            <p>
+                {{ __('sidebar.company') }}
+                <i class="fas fa-angle-left right"></i>
+            </p>
+        </a>
+        <ul class="nav nav-treeview">
+            <li class="nav-item">
+                <a href="{{ route('company_management.companies.index') }}"
+                   class="nav-link {{ activeClass(['company_management/companies*']) }}">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>{{ __('company.plural') }}</p>
+                </a>
+            </li>
+
+
+
+        </ul>
+    </li>
 </ul>

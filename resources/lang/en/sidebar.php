@@ -12,4 +12,8 @@ return [
     'title_setting'  => 'System Settings',
     'menu_settings'  => 'Settings',
     'countries'      => 'Country List',
+
+    // Companies
+    'title_Companies' => 'Company Management',
+    'company'         => 'Companies',
 ];

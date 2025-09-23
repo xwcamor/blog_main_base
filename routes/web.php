@@ -32,6 +32,7 @@ Route::group(
             require __DIR__.'/system_management.php';
             require __DIR__.'/dashboard_management.php';
             require __DIR__.'/download_management.php';
+            require __DIR__.'/company_management.php';
     
             // Auth Management
             Route::prefix('auth_management')->name('auth_management.')->group(function () {
