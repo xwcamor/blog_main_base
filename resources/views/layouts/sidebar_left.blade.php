@@ -54,8 +54,30 @@
             </li>
         </ul>
     </li>
-    
 
+    <li class="nav-header">{{ __('sidebar.title_company_management') }}</li>
 
+    @php
+        $localePrefix = app()->getLocale() . '/company_management/companies';
+    @endphp
+
+    <li class="nav-item {{ request()->is($localePrefix . '*') ? 'menu-open' : '' }}">
+        <a href="#" class="nav-link {{ request()->is($localePrefix . '*') ? 'active' : '' }}">
+            <i class="nav-icon fas fa-building"></i>
+            <p>
+                {{ __('sidebar.menu_companies') }}
+                <i class="fas fa-angle-left right"></i>
+            </p>
+        </a>
+        <ul class="nav nav-treeview">
+            <li class="nav-item">
+                <a href="{{ route('company_management.companies.index') }}"
+                class="nav-link {{ request()->is($localePrefix . '*') ? 'active' : '' }}">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>{{ __('companies.plural') }}</p>
+                </a>
+            </li>
+        </ul>
+    </li>
 
 </ul>

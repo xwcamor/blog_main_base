@@ -61,4 +61,7 @@ return [
     'failed'               => 'Failed',
     'no_downloads'         => 'No downloads available',
     'download_ready'       => 'Your download is ready',    
+    'no_records'            => 'No records found',
+    'edit_all'             => 'Edit All',
+    'view_list'       => 'View List',
 ];

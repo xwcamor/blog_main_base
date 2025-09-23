@@ -10,6 +10,10 @@ return [
     
     // Menu Settings
     'title_setting' => 'Ajustes del Sistema',
+    'title_company_management'  => 'Gestión de Empresas',
     'menu_settings' => 'Ajustes',
+    'menu_companies' => 'Compañías',
     'countries' => 'Listado de Países',
+    'languages' => 'Listado de Idiomas',
+    'companies' => 'Listado de Empresas',
 ];

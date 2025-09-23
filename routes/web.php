@@ -17,7 +17,7 @@ use App\Http\Controllers\SystemManagement\SettingController;
 use App\Http\Controllers\SystemManagement\CountryController;
 use App\Http\Controllers\SystemManagement\LanguageController;
 use App\Http\Controllers\DownloadManagement\UserDownloadController;
-
+use App\Http\Controllers\CompanyManagement\CompanyController;
 //use App\Http\Controllers\LocaleController;
 
 // Localization
@@ -84,6 +84,8 @@ Route::group(
                 Route::post('countries/update_inline', [CountryController::class, 'updateInline'])->name('countries.update_inline');                
                 Route::get('countries/export_excel', [CountryController::class, 'exportExcel'])->name('countries.export_excel');
                 Route::get('countries/export_pdf', [CountryController::class, 'exportPdf'])->name('countries.export_pdf');
+            
+            
             });
 
             // Auth Management
@@ -93,6 +95,20 @@ Route::group(
                 Route::get('users/{user}/delete', [UserController::class, 'delete'])->name('users.delete');
                 Route::delete('users/{user}/deleteSave', [UserController::class, 'deleteSave'])->name('users.deleteSave');
             });
+
+            Route::prefix('company_management')->name('company_management.')->middleware(['auth'])->group(function () {
+            Route::get('companies/fetch-dni/{num_doc}', [CompanyController::class, 'fetchDni'])->name('companies.fetch_dni');
+            Route::get('companies/export_excel', [CompanyController::class, 'exportExcel'])->name('companies.export_excel');
+            Route::get('companies/export_pdf', [CompanyController::class, 'exportPdf'])->name('companies.export_pdf');
+            Route::get('companies/export_word', [CompanyController::class, 'exportWord'])->name('companies.export_word');
+            Route::get('companies/edit_all', [CompanyController::class, 'editAll'])->name('companies.edit_all');
+            Route::post('companies/update_inline', [CompanyController::class, 'updateInline'])->name('companies.update_inline');
+            Route::resource('companies', CompanyController::class)->names('companies');
+            Route::get('companies/{company}/delete', [CompanyController::class, 'delete'])->name('companies.delete');
+            Route::delete('companies/{company}/deleteSave', [CompanyController::class, 'deleteSave'])->name('companies.deleteSave');
+            });
+
+
         });
 
         // Login

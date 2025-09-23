@@ -61,4 +61,7 @@ return [
     'failed'               => 'Fallido',
     'no_downloads'         => 'No hay descargas disponibles',
     'download_ready'       => 'Tu descarga está lista',    
+    'no_records'            => 'No se encontraron registros',
+    'edit_all'             => 'Editar Todo',
+    'view_list'       => 'Ver Lista',
 ];
