@@ -18,13 +18,13 @@
         </div>
       </div>
       <div class="card-body">
-        @include('core_management.languages.partials.index_filters')
+        @include('system_management.languages.partials.index_filters')
       </div>
       <div class="card-footer text-center">
         <button type="button" onclick="submitWithParsley()" class="btn btn-primary mr-4">
           <i class="fas fa-search"></i> {{ __('global.search') }}
         </button>
-        <a href="{{ route('core_management.languages.edit_all') }}" class="btn btn-default">
+        <a href="{{ route('system_management.languages.edit_all') }}" class="btn btn-default">
           <i class="fas fa-brush"></i> {{ __('global.clear') }}
         </a>
       </div>

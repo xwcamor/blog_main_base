@@ -43,7 +43,7 @@
         </div>
       </div>
       <div class="card-body">
-        @include('system_management.languages.partials.form_show_audit')
+        @include('system_management.system_modules.partials.form_show_audit')
       </div>
     </div>
   </div>

@@ -5,6 +5,8 @@ use App\Http\Controllers\SystemManagement\SystemModuleController;
 use App\Http\Controllers\SystemManagement\SettingController;
 use App\Http\Controllers\SystemManagement\CountryController;
 use App\Http\Controllers\SystemManagement\LanguageController;
+use App\Http\Controllers\SystemManagement\TenantController;
+use App\Http\Controllers\SystemManagement\RegionController;
 
 Route::prefix('system_management')->name('system_management.')->group(function () {
 
@@ -35,6 +37,32 @@ Route::prefix('system_management')->name('system_management.')->group(function (
     Route::resource('languages', LanguageController::class)->names('languages');
     Route::get('languages/{language}/delete',        [LanguageController::class, 'delete'])->name('languages.delete');
     Route::delete('languages/{language}/deleteSave', [LanguageController::class, 'deleteSave'])->name('languages.deleteSave');
+
+    // ------------------------------
+    // Tenants
+    // ------------------------------
+    Route::get('tenants/export_excel', [TenantController::class, 'exportExcel'])->name('tenants.export_excel');
+    Route::get('tenants/export_pdf',   [TenantController::class, 'exportPdf'])->name('tenants.export_pdf');
+    Route::get('tenants/export_word',  [TenantController::class, 'exportWord'])->name('tenants.export_word');
+    Route::get('tenants/edit_all',     [TenantController::class, 'editAll'])->name('tenants.edit_all');
+    Route::post('tenants/update_inline', [TenantController::class, 'updateInline'])->name('tenants.update_inline');
+
+    Route::resource('tenants', TenantController::class)->names('tenants');
+    Route::get('tenants/{tenant}/delete',        [TenantController::class, 'delete'])->name('tenants.delete');
+    Route::delete('tenants/{tenant}/deleteSave', [TenantController::class, 'deleteSave'])->name('tenants.deleteSave');
+
+    // ------------------------------
+    // Regions
+    // ------------------------------
+    Route::get('regions/export_excel', [RegionController::class, 'exportExcel'])->name('regions.export_excel');
+    Route::get('regions/export_pdf',   [RegionController::class, 'exportPdf'])->name('regions.export_pdf');
+    Route::get('regions/export_word',  [RegionController::class, 'exportWord'])->name('regions.export_word');
+    Route::get('regions/edit_all',     [RegionController::class, 'editAll'])->name('regions.edit_all');
+    Route::post('regions/update_inline', [RegionController::class, 'updateInline'])->name('regions.update_inline');
+
+    Route::resource('regions', RegionController::class)->names('regions');
+    Route::get('regions/{region}/delete',        [RegionController::class, 'delete'])->name('regions.delete');
+    Route::delete('regions/{region}/deleteSave', [RegionController::class, 'deleteSave'])->name('regions.deleteSave');
 
     // ------------------------------
     // Settings

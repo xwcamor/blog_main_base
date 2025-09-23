@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-@section('title', __('languages.edit_all_title'))
-@section('title_navbar', __('languages.plural'))
+@section('title', __('system_modules.edit_all_title'))
+@section('title_navbar', __('system_modules.plural'))
 
 @section('content')
 <div class="row">
@@ -18,13 +18,13 @@
         </div>
       </div>
       <div class="card-body">
-        @include('core_management.languages.partials.index_filters')
+        @include('system_management.system_modules.partials.index_filters')
       </div>
       <div class="card-footer text-center">
         <button type="button" onclick="submitWithParsley()" class="btn btn-primary mr-4">
           <i class="fas fa-search"></i> {{ __('global.search') }}
         </button>
-        <a href="{{ route('core_management.languages.edit_all') }}" class="btn btn-default">
+        <a href="{{ route('system_management.system_modules.edit_all') }}" class="btn btn-default">
           <i class="fas fa-brush"></i> {{ __('global.clear') }}
         </a>
       </div>
@@ -38,17 +38,17 @@
       <div class="card-header">
         <h3 class="card-title pt-1">
           <i class="fas fa-table"></i> {{ __('global.card_title_result') }}:
-          @if ($languages->total() > 0)
-            {{ $languages->total() }}
+          @if ($system_modules->total() > 0)
+            {{ $system_modules->total() }}
           @else
             0
           @endif
         </h3>
         <div class="card-tools">
-          <a class="btn btn-sm btn-primary mr-2" href="{{ route('system_management.languages.create') }}">
+          <a class="btn btn-sm btn-primary mr-2" href="{{ route('system_management.system_modules.create') }}">
             <i class="fas fa-plus"></i> <span class="d-none d-sm-inline">{{ __('global.create') }}</span>
           </a>
-          <a class="btn btn-sm bg-olive mr-2" href="{{ route('system_management.languages.index') }}">
+          <a class="btn btn-sm bg-olive mr-2" href="{{ route('system_management.system_modules.index') }}">
             <i class="fas fa-list"></i> <span class="d-none d-sm-inline">{{ __('global.view_list') }}</span>
           </a>
           <!-- Export Dropdown -->
@@ -57,10 +57,10 @@
               <i class="fas fa-file-export"></i> <span class="d-none d-sm-inline">{{ __('global.export') }}</span>
             </button>
             <div class="dropdown-menu dropdown-menu-right">
-              <a class="dropdown-item text-dark" href="{{ route('system_management.languages.export_excel', request()->query()) }}">
+              <a class="dropdown-item text-dark" href="{{ route('system_management.system_modules.export_excel', request()->query()) }}">
                 <i class="fas fa-file-excel text-success"></i> {{ __('global.excel') }}
               </a>
-              <a class="dropdown-item text-dark" href="{{ route('system_management.languages.export_pdf', request()->query()) }}">
+              <a class="dropdown-item text-dark" href="{{ route('system_management.system_modules.export_pdf', request()->query()) }}">
                 <i class="fas fa-file-pdf text-danger"></i> {{ __('global.pdf') }}
               </a>
             </div>
@@ -72,7 +72,7 @@
       </div>
       <div class="card-body">
         <div class="table-responsive">
-          @include('system_management.languages.partials.edit_all_results')
+          @include('system_management.system_modules.partials.edit_all_results')
         </div>
       </div>
     </div>
@@ -84,4 +84,4 @@
 @include('layouts.plugins.parsley')
 @endpush
 
-@include('system_management.languages.partials.edit_all_scripts')
+@include('system_management.system_modules.partials.edit_all_scripts')

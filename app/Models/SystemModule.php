@@ -30,12 +30,12 @@ class SystemModule extends Model
     // Boot method to generate a unique slug when creating
     protected static function booted()
     {
-        static::creating(function ($language) {
+        static::creating(function ($system_module) {
             do {
                 $slug = Str::random(22);
-            } while (Language::where('slug', $slug)->exists());
+            } while (SystemModule::where('slug', $slug)->exists());
 
-            $language->slug = $slug;
+            $system_module->slug = $slug;
         });
     }
 
@@ -55,7 +55,7 @@ class SystemModule extends Model
     {
         return $this->belongsTo(User::class, 'deleted_by');
     }
-    
+
     // Set Attribute accessor for name and permission_key
     public function setNameAttribute($value)
     {
@@ -66,7 +66,7 @@ class SystemModule extends Model
         $snake = Str::snake(Str::singular($value));
         $this->attributes['permission_key'] = Str::plural($snake);
     }
-    
+
     // Accessor to get related permissions
     public function getPermissionsAttribute()
     {
@@ -88,15 +88,20 @@ class SystemModule extends Model
         if ($request->filled('name')) {
             $query->where('name', 'like', '%' . $request->name . '%');
         }
-        
+
+        // Filter for permission_key
+        if ($request->filled('permission_key')) {
+            $query->where('permission_key', 'like', '%' . $request->permission_key . '%');
+        }
+
         // Order
         $sort = $request->get('sort', 'id');
         $direction = $request->get('direction', 'asc');
 
-        if (in_array($sort, ['id', 'name']) && in_array($direction, ['asc', 'desc'])) {
+        if (in_array($sort, ['id', 'name', 'permission_key']) && in_array($direction, ['asc', 'desc'])) {
             $query->orderBy($sort, $direction);
         }
 
         return $query;
-    }    
+    }
 }

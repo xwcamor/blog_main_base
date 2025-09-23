@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>{{ __('languages.export_title') }}</title>
+    <title>{{ __('system_modules.export_title') }}</title>
     <style>
         body { font-family: DejaVu Sans, sans-serif; font-size: 12px; }
         table { width: 100%; border-collapse: collapse; }
@@ -10,17 +10,16 @@
     </style>
 </head>
 <body>
-    <h2>{{ __('languages.export_title') }}</h2>
+    <h2>{{ __('system_modules.export_title') }}</h2>
 
     <table>
         <thead>
             <tr>
-                <th>{{ __('languages.id') }}</th>
-                <th>{{ __('languages.name') }}</th>
-                <th>{{ __('languages.iso_code') }}</th>
-                <th>{{ __('languages.is_active') }}</th>
+                <th>{{ __('system_modules.id') }}</th>
+                <th>{{ __('system_modules.name') }}</th>
+                <th>{{ __('system_modules.is_active') }}</th>
                 <th>{{ __('global.created_by') }}</th>
-                <th>{{ __('global.created_at') }}</th>                
+                <th>{{ __('global.created_at') }}</th>
             </tr>
         </thead>
         <tbody>

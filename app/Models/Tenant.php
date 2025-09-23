@@ -18,8 +18,7 @@ class Tenant extends Model
 
     protected $fillable = [
         'name',
-        'iso_code',
-        'slug',
+        'logo',
         'is_active',
         'deletion_description',
         'created_by',
@@ -43,16 +42,8 @@ class Tenant extends Model
     {
         return 'slug';
     }
-    
-    // Relationships
-    public function users()
-    {
-        return $this->hasMany(User::class);
-    }
 
-    /**
-     * Relationships for audit.
-     */
+    // Relationships for audit.
     public function creator()
     {
         return $this->belongsTo(User::class, 'created_by');
@@ -63,9 +54,7 @@ class Tenant extends Model
         return $this->belongsTo(User::class, 'deleted_by');
     }
 
-    /**
-     * Accessor: return HTML state (active/inactive).
-     */
+    // Accessor: return HTML state (active/inactive).
     public function getStateHtmlAttribute()
     {
         return $this->is_active
@@ -73,9 +62,7 @@ class Tenant extends Model
             : '<span class="badge badge-danger">' . __('global.inactive') . '</span>';
     }
 
-    /**
-     * Accessor: return plain text state (active/inactive).
-     */
+    // Accessor: return plain text state (active/inactive).
     public function getStateTextAttribute()
     {
         return $this->is_active
@@ -83,24 +70,20 @@ class Tenant extends Model
             : __('global.inactive');
     }
 
-    /**
-     * Scope to filter out deleted records.
-     */
+    // Scope to filter out deleted records.
     public function scopeNotDeleted($query)
     {
         return $query->whereNull('deleted_at');
     }
 
-    /**
-     * Scope to filter by request parameters
-     */
-    public function scopeFilter(Builder $query, Request $request): Builder
+    // Scope to filter by request parameters
+    public function scopeFilterx(Builder $query, Request $request): Builder
     {
         // Filter for name
         if ($request->filled('name')) {
             $query->where('name', 'like', '%' . $request->name . '%');
         }
-        
+
         // Filter for is_active
         if ($request->filled('is_active')) {
             $query->where('is_active', (int) $request->is_active);
@@ -117,4 +100,32 @@ class Tenant extends Model
         return $query;
     }
 
+    // Scope to filter by request parameters or plain array
+    public function scopeFilter(Builder $query, Request|array $filters): Builder
+    {
+        // Convert array to Request if needed
+        if (is_array($filters)) {
+            $filters = new Request($filters);
+        }
+
+        // Filter for name
+        if ($filters->filled('name')) {
+            $query->where('name', 'like', '%' . $filters->name . '%');
+        }
+
+        // Filter for is_active
+        if ($filters->filled('is_active')) {
+            $query->where('is_active', (int) $filters->is_active);
+        }
+
+        // Order
+        $sort = $filters->get('sort', 'id');
+        $direction = $filters->get('direction', 'asc');
+
+        if (in_array($sort, ['id', 'name', 'is_active']) && in_array($direction, ['asc', 'desc'])) {
+            $query->orderBy($sort, $direction);
+        }
+
+        return $query;
+    }
 }
