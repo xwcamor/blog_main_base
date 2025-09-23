@@ -76,5 +76,5 @@ return [
     'download_ready'       => 'Your download is ready',    
     'waiting_for_download' => 'Waiting for download to complete...',
     'auto_refresh_stopped' => 'Auto-refresh stopped.',
-    'download_in_queue'    => 'Your report is being generated. Check your downloads queue soon.',    
+    'download_in_queue'    => 'Your report is being generated. Check your downloads queue soon.',
 ];

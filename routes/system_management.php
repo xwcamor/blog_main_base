@@ -5,6 +5,7 @@ use App\Http\Controllers\SystemManagement\SystemModuleController;
 use App\Http\Controllers\SystemManagement\SettingController;
 use App\Http\Controllers\SystemManagement\CountryController;
 use App\Http\Controllers\SystemManagement\LanguageController;
+use App\Http\Controllers\SystemManagement\LocaleController;
 
 Route::prefix('system_management')->name('system_management.')->group(function () {
 
@@ -57,4 +58,10 @@ Route::prefix('system_management')->name('system_management.')->group(function (
     Route::post('countries/update_inline', [CountryController::class, 'updateInline'])->name('countries.update_inline');
     Route::get('countries/export_excel', [CountryController::class, 'exportExcel'])->name('countries.export_excel');
     Route::get('countries/export_pdf',   [CountryController::class, 'exportPdf'])->name('countries.export_pdf');
+    // ------------------------------
+    // Locales
+    // ------------------------------
+    Route::resource('locales', LocaleController::class)->names('locales');
+    Route::get('locales/{locale}/delete', [LocaleController::class, 'delete'])->name('locales.delete');
+    Route::delete('locales/{locale}/deleteSave', [LocaleController::class, 'deleteSave'])->name('locales.deleteSave');
 });
