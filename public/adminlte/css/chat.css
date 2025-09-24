@@ -1,0 +1,79 @@
+.chat-messages {
+    background-color: #f8f9fa;
+    border-radius: 5px;
+}
+
+.chat-messages .message {
+    margin-bottom: 10px;
+    padding: 8px 12px;
+    border-radius: 15px;
+    max-width: 70%;
+    word-wrap: break-word;
+}
+
+.chat-messages .message.sent {
+    background-color: #007bff;
+    color: white;
+    margin-left: auto;
+    text-align: right;
+}
+
+.chat-messages .message.received {
+    background-color: #e9ecef;
+    color: #333;
+    margin-right: auto;
+}
+
+.chat-messages .message strong {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+
+.chat-messages .message small {
+    display: block;
+    font-size: 0.8em;
+    opacity: 0.8;
+    margin-top: 4px;
+}
+
+#message-input {
+    border-radius: 20px;
+    border: 1px solid #ddd;
+    padding: 8px 15px;
+}
+
+#send-button {
+    border-radius: 20px;
+    margin-left: 5px;
+}
+
+.input-group {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+/* User Status Styles */
+.user-status {
+    font-size: 0.8em;
+    font-weight: bold;
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin: 5px 0;
+    display: inline-block;
+}
+
+.status-online {
+    background-color: #28a745;
+    color: white;
+}
+
+.status-offline {
+    background-color: #dc3545;
+    color: white;
+}
+
+.user-status-header {
+    font-size: 0.9em;
+}
