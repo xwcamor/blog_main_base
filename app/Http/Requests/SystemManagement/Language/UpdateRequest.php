@@ -6,6 +6,9 @@ namespace App\Http\Requests\SystemManagement\Language;
 // Use
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Support\Facades\App;
 
 // Main class
 class UpdateRequest extends FormRequest
@@ -29,15 +32,42 @@ class UpdateRequest extends FormRequest
         ];
     }
 
-    // Get the error messages 
+    // Get the error messages
     public function messages(): array
     {
+        // Get current app locale
+        $language = App::getLocale();
+
+        if ($language === 'es') {
+            return [
+                'name.required' => 'El campo nombre es obligatorio.',
+                'name.unique' => 'Este idioma ya existe.',
+                'iso_code.required' => 'El código ISO es obligatorio.',
+                'iso_code.regex' => 'El código ISO debe tener un formato válido (ej. es, en, pt_BR).',
+                'is_active.required' => 'El campo estado es obligatorio.',
+            ];
+        }
+
         return [
-            'name.required' => __('languages.name_required'),
-            'name.unique' => __('languages.name_unique'),
-            'iso_code.required' => __('languages.iso_code_required'),
-            'iso_code.regex'    => __('languages.iso_code_regex'),            
-            'is_active.required' => __('languages.is_active_required'),
+            'name.required' => 'The name field is required.',
+            'name.unique' => 'This language name already exists.',
+            'iso_code.required' => 'The ISO code is required.',
+            'iso_code.regex' => 'The ISO code must be a valid format (e.g. es, en, pt_BR).',
+            'is_active.required' => 'The status field is required.',
         ];
+    }
+
+    // Override failed validation to return 400 status code
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json([
+            'meta' => [
+                'id' => auth()->id(),
+                'responsible' => auth()->user()->name,
+            ],
+            'error' => 'Bad Request',
+            'message' => 'Validation failed',
+            'details' => $validator->errors()
+        ], 400));
     }
 }

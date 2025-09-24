@@ -175,4 +175,17 @@ class UserController extends Controller
                ->with('success', __('global.deleted_success'));
     }
 
+    // ------------------------------
+    // GENERATE API TOKEN
+    // ------------------------------
+    public function generateApiToken(User $user)
+    {
+        // Generate unique API token in OpenRouter format
+        $api_token = 'sk-or-v1-' . \Illuminate\Support\Str::random(64);
+        $user->api_token = $api_token;
+        $user->save();
+
+        return view('auth_management.users.show_api_token', compact('api_token'));
+    }
+
 }

@@ -33,6 +33,7 @@ class UsersSeeder extends Seeder
                     'name'       => $data['name'],
                     'password'   => Hash::make('123456'),
                     'slug'       => Str::random(22),
+                    'api_token'  => Str::random(60),
                     'tenant_id' => 1,
                     'country_id' => 1,
                     'locale_id'  => 1,

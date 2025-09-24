@@ -32,13 +32,17 @@ Route::group(
             require __DIR__.'/system_management.php';
             require __DIR__.'/dashboard_management.php';
             require __DIR__.'/download_management.php';
-    
+
+            // API Tester
+            Route::get('/api-tester', [App\Http\Controllers\ApiTesterController::class, 'index'])->name('api_tester.index');
+
             // Auth Management
             Route::prefix('auth_management')->name('auth_management.')->group(function () {
                 // Users
                 Route::resource('users', UserController::class)->names('users');
                 Route::get('users/{user}/delete', [UserController::class, 'delete'])->name('users.delete');
                 Route::delete('users/{user}/deleteSave', [UserController::class, 'deleteSave'])->name('users.deleteSave');
+                Route::post('users/{user}/generate-api-token', [UserController::class, 'generateApiToken'])->name('users.generate_api_token');
             });
         });
 

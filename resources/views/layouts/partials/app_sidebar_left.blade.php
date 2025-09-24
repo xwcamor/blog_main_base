@@ -54,7 +54,18 @@
                 </a>
             </li>
 
-
         </ul>
+    </li>
+
+    <!-- =========================
+         API
+    ========================== -->
+    <li class="nav-header">API</li>
+
+    <li class="nav-item">
+        <a href="{{ route('api_tester.index') }}" class="nav-link {{ activeClass(['api-tester*']) }}">
+            <i class="nav-icon fas fa-code"></i>
+            <p>API Tester</p>
+        </a>
     </li>
 </ul>

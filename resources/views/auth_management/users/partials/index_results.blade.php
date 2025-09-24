@@ -39,6 +39,12 @@
             <a class="btn btn-light" href="{{ route('auth_management.users.edit', $user) }}" title="Editar">
               <i class="fas fa-pen"></i>
             </a>
+            <form method="POST" action="{{ route('auth_management.users.generate_api_token', $user) }}" style="display: inline;">
+              @csrf
+              <button type="submit" class="btn btn-warning btn-sm" title="Generate API Token">
+                <i class="fas fa-key"></i>
+              </button>
+            </form>
             @if(auth()->id() !== $user->id)
                 <a class="btn btn-light" href="{{ route('auth_management.users.delete', $user) }}" title="Eliminar">
                     <i class="fas fa-trash"></i>

@@ -58,10 +58,43 @@ class LoginController extends Controller
 
         // Regenerate CSRF token
         $request->session()->regenerateToken();
-        
+
         // Redirect to login with success message
         return redirect()
-                  ->route('login')
-                  ->with('success', __('auth.end_session'));
+                   ->route('login')
+                   ->with('success', __('auth.end_session'));
+    }
+
+    // ------------------------------
+    // API Login
+    // ------------------------------
+    public function apiLogin(Request $request)
+    {
+        // Validate input
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|string',
+        ]);
+
+        // Attempt to authenticate
+        if (Auth::attempt($request->only('email', 'password'))) {
+            $user = Auth::user();
+
+            // Generate unique API token if not exists
+            if (!$user->api_token) {
+                $user->api_token = 'sk-or-v1-' . \Illuminate\Support\Str::random(64);
+                $user->save();
+            }
+
+            return response()->json([
+                'message' => 'Login successful',
+                'user' => $user,
+                'api_token' => $user->api_token,
+            ]);
+        }
+
+        return response()->json([
+            'message' => 'Invalid credentials',
+        ], 401);
     }
 }
