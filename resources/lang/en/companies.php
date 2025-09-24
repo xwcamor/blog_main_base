@@ -7,8 +7,11 @@ return [
     'edit_title' => 'Edit Company',
     'show_title' => 'Company Details',
     'delete_title' => 'Delete Company',
+    'export_title' => 'Companies Export',
+    'export_filename' => 'Companies',
 
     // Fields
+    'id' => 'ID',
     'ruc' => 'RUC',
     'razon_social' => 'Business Name',
     'direccion' => 'Address',

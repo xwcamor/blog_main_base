@@ -129,6 +129,45 @@ class CompanyController extends Controller
             ->with('success', 'Company deleted successfully.');
     }
 
+    // Export Excel (background download)
+    public function exportExcel(Request $request)
+    {
+        \App\Jobs\CompanyManagement\Companies\GenerateCompaniesExcelJob::dispatch(
+            auth()->id(),
+            $request->all()
+        );
+
+        return redirect()
+            ->route('download_management.user_downloads.index')
+            ->with('success', __('global.download_in_queue'));
+    }
+
+    // Export PDF (background download)
+    public function exportPdf(Request $request)
+    {
+        \App\Jobs\CompanyManagement\Companies\GenerateCompaniesPdfJob::dispatch(
+            auth()->id(),
+            $request->all()
+        );
+
+        return redirect()
+            ->route('download_management.user_downloads.index')
+            ->with('success', __('global.download_in_queue'));
+    }
+
+    // Export Word (background download)
+    public function exportWord(Request $request)
+    {
+        \App\Jobs\CompanyManagement\Companies\GenerateCompaniesWordJob::dispatch(
+            auth()->id(),
+            $request->all()
+        );
+
+        return redirect()
+            ->route('download_management.user_downloads.index')
+            ->with('success', __('global.download_in_queue'));
+    }
+
     // =========================================================================
     // AJAX / API SUNAT
     // =========================================================================
