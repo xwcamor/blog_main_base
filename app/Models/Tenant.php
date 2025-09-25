@@ -20,12 +20,13 @@ class Tenant extends Model
         'name',
         'logo',
         'is_active',
+        'api_key',
         'created_by',
         'deleted_by',
-        'deletion_description',        
+        'deletion_description',
     ];
 
-    // Boot method to generate a unique slug when creating
+    // Boot method to generate a unique slug and api_key when creating
     protected static function booted()
     {
         static::creating(function ($tenant) {
@@ -34,6 +35,12 @@ class Tenant extends Model
             } while (Tenant::where('slug', $slug)->exists());
 
             $tenant->slug = $slug;
+
+            do {
+                $apiKey = 'sk-' . Str::random(48);
+            } while (Tenant::where('api_key', $apiKey)->exists());
+
+            $tenant->api_key = $apiKey;
         });
     }
 

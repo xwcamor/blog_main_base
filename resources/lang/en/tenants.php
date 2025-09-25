@@ -15,6 +15,7 @@ return [
     'id'              => 'No.',
     'name'            => 'Name',
     'logo'            => 'Logo',
+    'api_key'         => 'API Key',
     'is_active'       => 'Status',
 
     // Table headers for live edit

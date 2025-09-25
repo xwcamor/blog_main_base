@@ -81,4 +81,16 @@ return [
     'download_in_queue'    => 'Tu reporte está en cola. Revisa tu sección de descargas en unos momentos.',
     'no_image'             => 'Sin imagen',
     'view_list'            => 'Ver Lista',
+
+    // API Messages
+    'api' => [
+        'validation_failed' => 'Validación fallida',
+        'created_success'   => '¡Creado exitosamente!',
+        'updated_success'   => '¡Actualizado exitosamente!',
+        'deleted_success'   => '¡Eliminado exitosamente!',
+        'bad_request'       => 'Solicitud incorrecta',
+        'unauthorized'      => 'No autorizado',
+        'not_found'         => 'Recurso no encontrado',
+        'success'           => 'Operación exitosa',
+    ],
 ];

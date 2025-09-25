@@ -12,6 +12,7 @@
         </a>
       </th>
       <th>{{ __('tenants.logo') }}</th>
+      <th>{{ __('tenants.api_key') }}</th>
       <th>
         <a class="text-dark text-decoration-none" href="{{ route('system_management.tenants.index', array_merge(request()->all(), ['sort' => 'is_active', 'direction' => request('direction') === 'asc' ? 'desc' : 'asc'])) }}">
           {{ __('tenants.is_active') }}
@@ -26,9 +27,14 @@
         <td>{{ $loop->iteration + $tenants->firstItem() - 1 }}</td>
         <td>{{ $tenant->name }}</td>
         <td>
-          {{ $tenant->logo }} 
+          {{ $tenant->logo }}
         </td>
-
+        <td>
+          <code class="text-muted small">{{ $tenant->api_key }}</code>
+          <button class="btn btn-sm btn-outline-secondary ml-1" onclick="navigator.clipboard.writeText('{{ $tenant->api_key }}')" title="Copiar API Key">
+            <i class="fas fa-copy"></i>
+          </button>
+        </td>
         <td>{!! $tenant->state_html !!}</td>
         <td>
           <div class="btn-group btn-group-sm" role="group">

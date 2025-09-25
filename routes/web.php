@@ -20,7 +20,7 @@ Route::group(
     function () {
 
         // Protected by auth
-        Route::middleware(['auth'])->group(function () {
+        Route::middleware(['auth', 'update.user.language'])->group(function () {
 
             // Main 
             Route::get('/', function () {

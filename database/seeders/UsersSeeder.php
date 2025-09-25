@@ -36,6 +36,7 @@ class UsersSeeder extends Seeder
                     'tenant_id' => 1,
                     'country_id' => 1,
                     'locale_id'  => 1,
+                    'language'   => 'es',
                     'created_by' => 1,
                     'is_active'  => 1,
                     'created_at' => now(),

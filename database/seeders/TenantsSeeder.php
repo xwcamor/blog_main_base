@@ -3,8 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
+use App\Models\Tenant;
 
 class TenantsSeeder extends Seeder
 {
@@ -13,9 +12,14 @@ class TenantsSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('tenants')->insert([
-            ['id' => 1, 'slug' => Str::random(22), 'created_by' => 1, 'name' => 'HITACHI ENERGY', 'created_at' => now(), 'updated_at' => now()],
-            ['id' => 2, 'slug' => Str::random(22), 'created_by' => 1, 'name' => 'SIEMBRES', 'created_at' => now(), 'updated_at' => now()],
+        Tenant::create([
+            'name' => 'HITACHI ENERGY',
+            'created_by' => 1,
+        ]);
+
+        Tenant::create([
+            'name' => 'SIEMBRES',
+            'created_by' => 1,
         ]);
     }
 }
